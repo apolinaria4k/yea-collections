@@ -1,0 +1,160 @@
+.header {
+  width: 100%;
+  background-color: #fff;
+  padding: 8px 0;
+  margin-bottom: 40px;
+}
+
+.wrapperHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 8px 112px;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.prepareButton {
+  display: none;
+  width: 115px;
+  text-align: left;
+  position: relative;
+}
+
+.prepareButton::after {
+  content: '';
+  display: flex;
+  width: 16px;
+  height: 8px;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translate(0, -50%);
+  background-image: url(/images/arrowDownGrey.svg);
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+button {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  border: none;
+  background-color: transparent;
+}
+
+.maxLogo {
+  display: flex;
+  width: 172px;
+  height: 33px;
+  background-image: url(/images/bigLogo.svg);
+}
+
+.buttonsWrapper {
+  position: relative;
+}
+
+.buttons {
+  display: flex;
+  gap: 20px;
+}
+
+.burgerMenu {
+  display: none;
+  width: 32px;
+  height: 32px;
+}
+
+.enterButton {
+  color: #6a0bff;
+}
+
+.signUpButton {
+  background: #6a0bff;
+  color: #fff;
+  padding: 11px 28px;
+  border-radius: 12px;
+}
+
+.navListWrapper {
+  position: relative;
+}
+
+.enterButton:hover,
+.signUpButton:hover {
+  cursor: pointer;
+}
+
+.miniLogo {
+  display: none;
+  width: 33px;
+  height: 33px;
+  background-image: url(/images/miniLogo.svg);
+}
+
+@media (max-width: 768px) {
+  .header {
+    margin-bottom: 24px;
+  }
+  .wrapperHeader {
+    padding: 15px 30px;
+  }
+
+  .buttons {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: -220px;
+    z-index: 100;
+    border-radius: 12px;
+    transform: translate(0, -50%);
+  }
+
+  .loginVisible {
+    display: flex;
+  }
+  .burgerMenu {
+    display: flex;
+    background-image: url(/images/burgerMenu.svg);
+  }
+
+  .burgerMenu:hover {
+    cursor: pointer;
+  }
+
+  .prepareButton {
+    display: flex;
+  }
+
+  .prepareButton:hover {
+    cursor: pointer;
+  }
+}
+
+@media (max-width: 360px) {
+  .header {
+    margin-bottom: 24px;
+  }
+  .wrapperHeader {
+    padding: 15px 30px;
+  }
+  .buttons {
+    display: none;
+  }
+  .maxLogo {
+    display: none;
+  }
+  .miniLogo {
+    display: flex;
+  }
+
+  .wrapperHeader {
+    padding: 10px;
+  }
+}

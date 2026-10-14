@@ -1,0 +1,27 @@
+.navList {
+  display: flex;
+  gap: 20px;
+}
+
+.navList li:hover {
+  color: #6a0bff;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .navList {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    background-color: #fff;
+    top: 25px;
+    z-index: 100;
+    border-radius: 12px;
+    border: 1px solid #e8e8e8;
+    padding: 12px 24px;
+  }
+
+  .navList.visible {
+    display: flex;
+  }
+}
