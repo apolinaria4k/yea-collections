@@ -4,7 +4,7 @@ import AllCollectionsSection from '../AllCollectionsSection/AllCollectionsSectio
 import styles from './index.module.css';
 import axios from 'axios';
 
-export default function AllCollections() {
+export const AllCollections: React.FC = () => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
   // const [collections, setCollections] = useState([]);
 
@@ -35,4 +35,4 @@ export default function AllCollections() {
       </main>
     </>
   );
-}
+};

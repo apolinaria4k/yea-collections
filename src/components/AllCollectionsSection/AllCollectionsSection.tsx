@@ -1,4 +1,5 @@
 import styles from './index.module.css';
+import CollectionItem from '../CollectionItem/CollectionItem';
 
 export default function AllCollectionsSection() {
   return (
@@ -46,8 +47,12 @@ export default function AllCollectionsSection() {
           {questions.map((item) => (
             <QuestionItem key={item.id} {...item} />
           ))}
+        </ul> */}
+        {/* <Pagination /> */}
+
+        <ul className={styles.questionList}>
+          <CollectionItem />
         </ul>
-        <Pagination /> */}
       </section>
     </>
   );

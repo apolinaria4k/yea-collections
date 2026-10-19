@@ -12,10 +12,12 @@ export interface ICollection {
 export interface ICompany {
   id: string;
   title: string;
-  imageSrc: string;
+  imageSrc: string | null;
 }
 
 export interface ISpecialization {
   id: string;
   title: string;
 }
+
+export type Status = 'idle' | 'loading' | 'success' | 'error';

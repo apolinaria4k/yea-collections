@@ -30,7 +30,7 @@
 .questionList {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 20px;
   margin-bottom: 40px;
 }
 
