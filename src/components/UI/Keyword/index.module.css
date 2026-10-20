@@ -1,0 +1,10 @@
+.keyword {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 120%;
+  color: #008616;
+  background-color: #edf7ef;
+}

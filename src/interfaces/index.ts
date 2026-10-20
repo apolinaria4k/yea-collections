@@ -1,3 +1,10 @@
+export interface IResponse {
+  data: ICollection[];
+  limit: number;
+  page: number;
+  total: number;
+}
+
 export interface ICollection {
   id: string;
   company: ICompany | null;

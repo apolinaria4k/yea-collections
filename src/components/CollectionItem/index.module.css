@@ -25,22 +25,6 @@
   justify-content: space-between;
 }
 
-.keywordsWrapper {
-  display: flex;
-  gap: 14px;
-}
-
-.keyword {
-  display: inline-block;
-  padding: 3px 8px;
-  border-radius: 30px;
-  font-weight: 600;
-  font-size: 12px;
-  line-height: 120%;
-  color: #008616;
-  background-color: #edf7ef;
-}
-
 .detailsWrapper {
   display: flex;
   gap: 16px;

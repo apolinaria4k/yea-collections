@@ -1,7 +1,24 @@
 import styles from './index.module.css';
-import CollectionItem from '../CollectionItem/CollectionItem';
+import { CollectionItem } from '../CollectionItem/CollectionItem';
+import { useFetching } from '../../hooks/useFetching';
+import CollectionService from '../../API/CollectionService';
+import { useEffect, useState } from 'react';
+import type { ICollection } from '../../interfaces';
 
-export default function AllCollectionsSection() {
+const AllCollectionsSection: React.FC = () => {
+  const [collections, setCollections] = useState<ICollection[]>([]);
+
+  const [fetchCollections, status, error] = useFetching(async () => {
+    const response = await CollectionService.getAllCollections();
+    setCollections(response.data.data);
+  });
+
+  useEffect(() => {
+    fetchCollections();
+  }, []);
+
+  console.log(collections);
+
   return (
     <>
       <section className={styles.section}>
@@ -51,9 +68,13 @@ export default function AllCollectionsSection() {
         {/* <Pagination /> */}
 
         <ul className={styles.questionList}>
-          <CollectionItem />
+          {collections.map((c) => (
+            <CollectionItem key={c.id} collection={c} />
+          ))}
         </ul>
       </section>
     </>
   );
-}
+};
+
+export default AllCollectionsSection;
