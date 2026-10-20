@@ -1,0 +1,20 @@
+.questions {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 120%;
+  color: #6a0bff;
+  position: relative;
+  padding-left: 22px;
+}
+
+.questions::before {
+  display: flex;
+  content: '';
+  left: 0;
+  top: 50%;
+  transform: translate(0, -50%);
+  background-image: url(/question.svg);
+  position: absolute;
+  width: 17.92px;
+  height: 17.92px;
+}
