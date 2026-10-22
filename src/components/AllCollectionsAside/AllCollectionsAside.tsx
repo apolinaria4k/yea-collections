@@ -8,7 +8,7 @@ export default function AllCollectionsAside({ isVisible }: Props) {
   return (
     <>
       <aside className={`${styles.aside} ${isVisible ? styles.visible : ''}`}>
-        {/* <ButtonClose setIsVisible={setIsVisible}></ButtonClose>
+        <ButtonClose setIsVisible={setIsVisible}></ButtonClose>
 
         <div className={styles.innerWrapper}>
           <MyInput></MyInput>
@@ -19,7 +19,7 @@ export default function AllCollectionsAside({ isVisible }: Props) {
             setSpecializations={setSkillsAndSpec}
             totalSpec={totals.totalSpec}
           />
-        </div> */}
+        </div>
       </aside>
     </>
   );

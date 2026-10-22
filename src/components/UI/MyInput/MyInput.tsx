@@ -1,0 +1,43 @@
+import { useSearchParams } from 'react-router-dom';
+import styles from './index.module.css';
+
+interface Props {
+  description: string;
+}
+
+const MyInput: React.FC<Props> = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const value = searchParams.get('value') || '';
+
+  const changeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const next = new URLSearchParams(searchParams);
+    next.set('value', e.target.value);
+    next.set('page', String(1));
+    setSearchParams(next);
+  };
+
+  return (
+    <div className={styles.inputWrapper}>
+      <svg
+        className={styles.searchIcon}
+        width="18"
+        height="18"
+        viewBox="0 0 18 18"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M8.54167 1.25C4.51459 1.25 1.25 4.51459 1.25 8.54167C1.25 12.5687 4.51459 15.8333 8.54167 15.8333C12.5687 15.8333 15.8333 12.5687 15.8333 8.54167C15.8333 4.51459 12.5687 1.25 8.54167 1.25ZM0 8.54167C0 3.82423 3.82423 0 8.54167 0C13.2591 0 17.0833 3.82423 17.0833 8.54167C17.0833 10.6754 16.3009 12.6265 15.0074 14.1235L17.7336 16.8497C17.9777 17.0938 17.9777 17.4895 17.7336 17.7336C17.4895 17.9777 17.0938 17.9777 16.8497 17.7336L14.1235 15.0074C12.6265 16.3009 10.6754 17.0833 8.54167 17.0833C3.82423 17.0833 0 13.2591 0 8.54167Z"
+          fill="#A3A3A3"
+        />
+      </svg>
+      <input
+        value={value}
+        onChange={changeValue}
+        className={styles.input}
+        placeholder="Введите запрос..."
+      />
+    </div>
+  );
+};
+
+export default MyInput;

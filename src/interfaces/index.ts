@@ -28,3 +28,10 @@ export interface ISpecialization {
 }
 
 export type Status = 'idle' | 'loading' | 'success' | 'error';
+
+export interface ICollectionsContextValue {
+  collections: ICollection[];
+  setCollections: React.Dispatch<React.SetStateAction<ICollection[]>>;
+  totalPages: number;
+  setTotalPages: React.Dispatch<React.SetStateAction<number>>;
+}

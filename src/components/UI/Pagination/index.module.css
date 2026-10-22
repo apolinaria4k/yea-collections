@@ -1,0 +1,53 @@
+.paginationWrapper {
+  width: 100%;
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  justify-content: center;
+}
+
+.page {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 120%;
+  color: #474747;
+  padding: 6px;
+  border-radius: 2px;
+}
+
+.active {
+  background-color: #6a0bff;
+  color: #fff;
+}
+
+.page:hover {
+  background-color: #6a0bff;
+  color: #fff;
+  cursor: pointer;
+}
+
+.page:disabled {
+  background-color: transparent;
+  color: #acabab;
+}
+
+.button {
+  height: 28px;
+}
+
+.button:disabled,
+.page:disabled {
+  cursor: default;
+}
+
+.button:disabled rect {
+  stroke: #474747;
+}
+
+.button:disabled path {
+  fill: #474747;
+}
+
+.button:hover {
+  cursor: pointer;
+}

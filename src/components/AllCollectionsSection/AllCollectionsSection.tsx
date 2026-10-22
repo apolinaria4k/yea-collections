@@ -1,23 +1,16 @@
-import styles from './index.module.css';
+import useCollections from '../../hooks/useCollections';
+import type { Status } from '../../interfaces';
 import { CollectionItem } from '../CollectionItem/CollectionItem';
-import { useFetching } from '../../hooks/useFetching';
-import CollectionService from '../../API/CollectionService';
-import { useEffect, useState } from 'react';
-import type { ICollection } from '../../interfaces';
+import Pagination from '../UI/Pagination/Pagination';
+import styles from './index.module.css';
 
-const AllCollectionsSection: React.FC = () => {
-  const [collections, setCollections] = useState<ICollection[]>([]);
+interface Props {
+  status: Status;
+  error: string | null;
+}
 
-  const [fetchCollections, status, error] = useFetching(async () => {
-    const response = await CollectionService.getAllCollections();
-    setCollections(response.data.data);
-  });
-
-  useEffect(() => {
-    fetchCollections();
-  }, []);
-
-  console.log(collections);
+const AllCollectionsSection: React.FC<Props> = ({ status, error }) => {
+  const { collections } = useCollections();
 
   return (
     <>
@@ -43,35 +36,23 @@ const AllCollectionsSection: React.FC = () => {
           </button>
         </div>
 
-        {/* {status === 'idle' || status === 'loading' ? (
-        <Skeleton />
-      ) : status === 'error' ? (
-        <h2 className={styles.title}>{error?.message}</h2>
-      ) : !questions.length ? (
-        <h2 className={styles.title}>Вопросов с заданными параметрами не найдено</h2>
-      ) : (
-        <>
-          <ul className={styles.questionList}>
-            {questions.map((item) => (
-              <QuestionItem key={item.id} {...item} />
-            ))}
-          </ul>
-          <Pagination />
-        </>
-      )} */}
-
-        {/* <ul className={styles.questionList}>
-          {questions.map((item) => (
-            <QuestionItem key={item.id} {...item} />
-          ))}
-        </ul> */}
-        {/* <Pagination /> */}
-
-        <ul className={styles.questionList}>
-          {collections.map((c) => (
-            <CollectionItem key={c.id} collection={c} />
-          ))}
-        </ul>
+        {status === 'idle' || status === 'loading' ? (
+          // <Skeleton />
+          <h1>Загрузка...</h1>
+        ) : status === 'error' ? (
+          <h2 className={styles.title}>{error}</h2>
+        ) : !collections.length ? (
+          <h2 className={styles.title}>Вопросов с заданными параметрами не найдено</h2>
+        ) : (
+          <>
+            <ul className={styles.questionList}>
+              {collections.map((c) => (
+                <CollectionItem key={c.id} collection={c} />
+              ))}
+            </ul>
+            <Pagination />
+          </>
+        )}
       </section>
     </>
   );

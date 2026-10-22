@@ -20,6 +20,8 @@
 }
 
 .wrapper {
+  width: 100%;
+  max-width: 547px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

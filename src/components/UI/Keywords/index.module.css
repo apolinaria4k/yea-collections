@@ -1,4 +1,7 @@
 .keywordsWrapper {
+  width: 100%;
+  max-width: 547px;
+  flex-wrap: wrap;
   display: flex;
   gap: 14px;
 }

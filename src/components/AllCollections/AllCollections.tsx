@@ -2,34 +2,36 @@ import { useEffect, useState } from 'react';
 import AllCollectionsAside from '../AllCollectionsAside/AllCollectionsAside';
 import AllCollectionsSection from '../AllCollectionsSection/AllCollectionsSection';
 import styles from './index.module.css';
-import axios from 'axios';
+import { useFetching } from '../../hooks/useFetching';
+import CollectionService from '../../API/CollectionService';
+import useCollections from '../../hooks/useCollections';
+import { getTotalPages } from '../../utils/getTotalPages';
+import { useSearchParams } from 'react-router-dom';
 
 export const AllCollections: React.FC = () => {
+  const { collections, setCollections, setTotalPages } = useCollections();
   const [isVisible, setIsVisible] = useState<boolean>(false);
-  // const [collections, setCollections] = useState([]);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const page = Number(searchParams.get('page')) || 1;
 
-  async function fetchCollections() {
-    try {
-      const response = await axios.get('https://api.yeatwork.ru/collections/public', {
-        params: {
-          page: 1,
-        },
-      });
-      console.log(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  const [fetchCollections, status, error] = useFetching(async () => {
+    const response = await CollectionService.getAllCollections(page);
+    setCollections(response.data.data);
+    const totalCount = response.data.total;
+    setTotalPages(getTotalPages(totalCount));
+  });
 
   useEffect(() => {
-    fetchCollections();
-  }, []);
+    fetchCollections(page);
+  }, [page]);
+
+  console.log(collections);
 
   return (
     <>
       <main className={styles.main}>
         <div className={styles.wrapperMain}>
-          <AllCollectionsSection />
+          <AllCollectionsSection status={status} error={error} />
           <AllCollectionsAside isVisible={isVisible} />
         </div>
       </main>
