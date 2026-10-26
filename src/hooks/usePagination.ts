@@ -6,7 +6,6 @@ export const usePagination = (currentPage: number, totalPages: number) => {
     const range = [];
     const rangeWithDots = [];
     let last;
-    console.log(currentPage, totalPages);
 
     if (totalPages === 1) {
       rangeWithDots.push(1);

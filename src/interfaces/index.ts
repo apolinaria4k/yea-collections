@@ -1,5 +1,12 @@
-export interface IResponse {
+export interface IColResponse {
   data: ICollection[];
+  limit: number;
+  page: number;
+  total: number;
+}
+
+export interface ISpecResponse {
+  data: ISpecialization[];
   limit: number;
   page: number;
   total: number;
@@ -28,6 +35,7 @@ export interface ISpecialization {
 }
 
 export type Status = 'idle' | 'loading' | 'success' | 'error';
+export type Specialization = number | null;
 
 export interface ICollectionsContextValue {
   collections: ICollection[];

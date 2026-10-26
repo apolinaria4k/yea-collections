@@ -15,29 +15,22 @@
   font-size: 16px;
   line-height: 130%;
   outline: none;
-  margin-top: 8px;
+  position: relative;
 }
 
 .input:focus {
   border: 0.5px solid #939292;
 }
 
-.input::before {
+.inputWrapper::before {
+  display: flex;
   content: '';
+  left: 24px;
+  top: 50%;
+  z-index: 1;
+  transform: translate(0, -50%);
+  background-image: url(/public/searchIcon.svg);
+  position: absolute;
   width: 18px;
   height: 18px;
-  background-image: url('/public/searchIcon.svg.svg');
-  position: absolute;
-  top: 50%;
-  left: 24px;
-  z-index: 1;
-  transform: translate(0, -50%);
-}
-
-.searchIcon {
-  position: absolute;
-  top: 50%;
-  left: 24px;
-  z-index: 1;
-  transform: translate(0, -50%);
 }

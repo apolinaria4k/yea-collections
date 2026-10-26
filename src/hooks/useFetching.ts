@@ -3,9 +3,7 @@ import { useRef, useState } from 'react';
 import { getErrorMessage } from '../utils/getErrorMessage';
 import type { Status } from '../interfaces';
 
-export const useFetching = <T extends unknown[]>(
-  callback: (...args: [...T, AbortSignal]) => Promise<void>,
-) => {
+export const useFetching = <T extends unknown[]>(callback: (...args: [...T]) => Promise<void>) => {
   const controlledRef = useRef<AbortController | null>(null);
   const requestIdRef = useRef(0);
   const [status, setStatus] = useState<Status>('idle');
@@ -24,7 +22,7 @@ export const useFetching = <T extends unknown[]>(
       setStatus('loading');
       setError(null);
 
-      await callback(...args, signal);
+      await callback(...args);
 
       if (isActual() && !signal.aborted) {
         setStatus('success');

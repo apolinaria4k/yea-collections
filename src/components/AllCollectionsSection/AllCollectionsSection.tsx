@@ -7,9 +7,10 @@ import styles from './index.module.css';
 interface Props {
   status: Status;
   error: string | null;
+  setIsVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const AllCollectionsSection: React.FC<Props> = ({ status, error }) => {
+const AllCollectionsSection: React.FC<Props> = ({ status, error, setIsVisible }) => {
   const { collections } = useCollections();
 
   return (
@@ -18,7 +19,7 @@ const AllCollectionsSection: React.FC<Props> = ({ status, error }) => {
         <div className={styles.wrapper}>
           <h2 className={styles.title}>Коллекции</h2>
           <button
-            // onClick={() => setIsVisible(true)}
+            onClick={() => setIsVisible(true)}
             className={styles.svgButton}
             aria-label="Открыть фильтры">
             <svg
