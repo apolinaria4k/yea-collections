@@ -8,7 +8,7 @@ import useCollections from '../../hooks/useCollections';
 import { getTotalPages } from '../../utils/getTotalPages';
 import { useSearchParams } from 'react-router-dom';
 import { useDebounce } from '../../hooks/useDebounce';
-import type { ISpecialization, Specialization } from '../../interfaces';
+import type { ISpecialization } from '../../interfaces';
 
 export const AllCollections: React.FC = () => {
   const { collections, setCollections, setTotalPages } = useCollections();
@@ -18,17 +18,17 @@ export const AllCollections: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const page = Number(searchParams.get('page')) || 1;
-  const specialization = Number(searchParams.get('specialization')) || null;
+  const specializations = searchParams.get('specializations') || '';
 
   const value = searchParams.get('value') || '';
   const debouncedValue = useDebounce(value, 400);
 
   const [fetchCollections, status, error] = useFetching(
-    async (page: number, titleOrDescriptionSearch: string, specialization: Specialization) => {
+    async (page: number, titleOrDescriptionSearch: string, specializations: string) => {
       const response = await CollectionService.getAllCollections(
         page,
         titleOrDescriptionSearch,
-        specialization,
+        specializations,
       );
       setCollections(response.data.data);
       console.log(response.data);
@@ -44,8 +44,8 @@ export const AllCollections: React.FC = () => {
   });
 
   useEffect(() => {
-    fetchCollections(page, debouncedValue, specialization);
-  }, [page, debouncedValue, specialization]);
+    fetchCollections(page, debouncedValue, specializations);
+  }, [page, debouncedValue, specializations]);
 
   useEffect(() => {
     fetchSpecializations();

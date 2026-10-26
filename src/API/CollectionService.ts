@@ -1,5 +1,5 @@
 import axios from 'axios';
-import type { IColResponse, ISpecResponse, Specialization } from '../interfaces';
+import type { IColResponse, ISpecResponse } from '../interfaces';
 
 const COLLECTIONS_URL = import.meta.env.VITE_COLLECTIONS_API_URL;
 const SPECIALIZATIONS_URL = import.meta.env.VITE_SPECIALIZATIONS_API_URL;
@@ -8,13 +8,18 @@ export default class CollectionService {
   static async getAllCollections(
     page = 1,
     titleOrDescriptionSearch: string,
-    specializationId: Specialization,
+    specializations: string,
   ) {
     const params = {
       page,
       titleOrDescriptionSearch,
-      specializationId,
+      specializations: specializations || null,
     };
+
+    // if (specializations.length) {
+    //   params.specializations = specializations;
+    // }
+
     const response = await axios.get<IColResponse>(COLLECTIONS_URL, {
       params,
     });

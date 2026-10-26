@@ -35,7 +35,6 @@ export interface ISpecialization {
 }
 
 export type Status = 'idle' | 'loading' | 'success' | 'error';
-export type Specialization = number | null;
 
 export interface ICollectionsContextValue {
   collections: ICollection[];
