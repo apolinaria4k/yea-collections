@@ -9,16 +9,14 @@ export default class CollectionService {
     page = 1,
     titleOrDescriptionSearch: string,
     specializations: string,
+    isFree: string,
   ) {
     const params = {
       page,
       titleOrDescriptionSearch,
       specializations: specializations || null,
+      isFree: isFree || null,
     };
-
-    // if (specializations.length) {
-    //   params.specializations = specializations;
-    // }
 
     const response = await axios.get<IColResponse>(COLLECTIONS_URL, {
       params,

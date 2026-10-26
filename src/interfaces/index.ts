@@ -29,6 +29,12 @@ export interface ICompany {
   imageSrc: string | null;
 }
 
+export interface IAccess {
+  id: number;
+  title: string;
+  isFree: boolean;
+}
+
 export interface ISpecialization {
   id: string;
   title: string;

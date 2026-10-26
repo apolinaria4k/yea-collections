@@ -19,16 +19,23 @@ export const AllCollections: React.FC = () => {
 
   const page = Number(searchParams.get('page')) || 1;
   const specializations = searchParams.get('specializations') || '';
+  const isFree = searchParams.get('isFree') || '';
 
   const value = searchParams.get('value') || '';
   const debouncedValue = useDebounce(value, 400);
 
   const [fetchCollections, status, error] = useFetching(
-    async (page: number, titleOrDescriptionSearch: string, specializations: string) => {
+    async (
+      page: number,
+      titleOrDescriptionSearch: string,
+      specializations: string,
+      isFree: string,
+    ) => {
       const response = await CollectionService.getAllCollections(
         page,
         titleOrDescriptionSearch,
         specializations,
+        isFree,
       );
       setCollections(response.data.data);
       console.log(response.data);
@@ -44,8 +51,8 @@ export const AllCollections: React.FC = () => {
   });
 
   useEffect(() => {
-    fetchCollections(page, debouncedValue, specializations);
-  }, [page, debouncedValue, specializations]);
+    fetchCollections(page, debouncedValue, specializations, isFree);
+  }, [page, debouncedValue, specializations, isFree]);
 
   useEffect(() => {
     fetchSpecializations();
