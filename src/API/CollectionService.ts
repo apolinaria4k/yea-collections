@@ -1,8 +1,9 @@
 import axios from 'axios';
-import type { IColResponse, ISpecResponse } from '../interfaces';
+import type { ICollection, IColResponse, ISpecResponse } from '../interfaces';
 
 const COLLECTIONS_URL = import.meta.env.VITE_COLLECTIONS_API_URL;
 const SPECIALIZATIONS_URL = import.meta.env.VITE_SPECIALIZATIONS_API_URL;
+const COLLECTION_BY_ID = import.meta.env.VITE_COLLECTION_BY_ID_API_URL;
 
 export default class CollectionService {
   static async getAllCollections(
@@ -30,6 +31,11 @@ export default class CollectionService {
         limit,
       },
     });
+    return response;
+  }
+
+  static async getCollectionById(collectionId: number) {
+    const response = await axios.get<ICollection>(`${COLLECTION_BY_ID}${collectionId}/public`);
     return response;
   }
 }

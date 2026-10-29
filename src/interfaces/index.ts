@@ -5,6 +5,13 @@ export interface IColResponse {
   total: number;
 }
 
+// export interface IColByIdResponse {
+//   data: ICollection;
+//   limit: number;
+//   page: number;
+//   total: number;
+// }
+
 export interface ISpecResponse {
   data: ISpecialization[];
   limit: number;
@@ -16,6 +23,7 @@ export interface ICollection {
   id: string;
   company: ICompany | null;
   imageSrc: string;
+  title: string;
   description: string;
   isFree: boolean;
   keywords: string[];

@@ -46,11 +46,11 @@ const AllCollectionsSection: React.FC<Props> = ({ status, error, setIsVisible })
           <h2 className={styles.title}>Вопросов с заданными параметрами не найдено</h2>
         ) : (
           <>
-            <ul className={styles.questionList}>
+            <div className={styles.questionList}>
               {collections.map((c) => (
                 <CollectionItem key={c.id} collection={c} />
               ))}
-            </ul>
+            </div>
             <Pagination />
           </>
         )}
