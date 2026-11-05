@@ -3,7 +3,7 @@ import { PublicCollectionItem } from '../PublicCollectionItem/PublicCollectionIt
 import styles from './index.module.css';
 
 interface Props {
-  collection: ICollection;
+  collection: ICollection | undefined;
   // status: Status;
   // error: string | null;
   setIsVisible: React.Dispatch<React.SetStateAction<boolean>>;

@@ -5,6 +5,7 @@ import { useFetching } from '../../hooks/useFetching';
 import type { ICollection } from '../../interfaces';
 import styles from './index.module.css';
 import PublicCollectionsSection from '../PublicCollectionsSection/PublicCollectionsSection';
+import PublicCollectionsAside from '../PublicCollectionsAside/PublicCollectionsAside';
 
 export const PublicCollectionDetails: React.FC = () => {
   const { collectionId } = useParams();
@@ -65,14 +66,18 @@ export const PublicCollectionDetails: React.FC = () => {
     <>
       <main className={styles.main}>
         <div className={styles.wrapperMain}>
-          <PublicCollectionsSection collection={collection} setIsVisible={setIsVisible} />
-          {/* <PublicCollectionsAside
-            totalSpecs={totalSpecs}
-            specializations={specs}
-            setSpecializations={setSpecs}
-            isVisible={isVisible}
-            setIsVisible={setIsVisible}
-          /> */}
+          {!collection ? (
+            <h1>Загрузка...</h1>
+          ) : (
+            <>
+              <PublicCollectionsSection collection={collection} setIsVisible={setIsVisible} />
+              <PublicCollectionsAside
+                collection={collection}
+                isVisible={isVisible}
+                setIsVisible={setIsVisible}
+              />
+            </>
+          )}
         </div>
       </main>
     </>

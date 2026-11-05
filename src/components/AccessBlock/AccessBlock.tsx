@@ -9,7 +9,7 @@ interface Props {
   data: IAccess[];
 }
 
-const SpecializationsBlock: React.FC<Props> = ({ title, data }) => {
+const AccessBlock: React.FC<Props> = ({ title, data }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const stringIsFree = searchParams.get('isFree');
 
@@ -43,4 +43,4 @@ const SpecializationsBlock: React.FC<Props> = ({ title, data }) => {
   );
 };
 
-export default SpecializationsBlock;
+export default AccessBlock;

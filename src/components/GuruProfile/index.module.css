@@ -1,0 +1,39 @@
+.guruWrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 130%;
+}
+
+.guruProfile {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.name {
+  color: #303030;
+}
+
+.afterName {
+  color: #757575;
+}
+
+@media (max-width: 768px) {
+  .guruWrapper {
+    width: 100%;
+    /* max-width: 708px; */
+  }
+}
+
+@media (max-width: 360px) {
+}
