@@ -37,6 +37,11 @@ export interface ICompany {
   imageSrc: string | null;
 }
 
+export interface IQuestion {
+  id: string;
+  title: string;
+}
+
 export interface IAccess {
   id: number;
   title: string;

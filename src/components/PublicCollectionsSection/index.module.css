@@ -15,15 +15,12 @@
   justify-content: space-between;
   padding-bottom: 20px;
   margin-bottom: 24px;
+  position: relative;
 }
 
 .title {
   font-size: 24px;
   font-weight: 500;
-}
-
-.svgButton {
-  display: none;
 }
 
 .questionList {
@@ -34,14 +31,6 @@
 }
 
 @media (max-width: 768px) {
-  .svgButton {
-    display: flex;
-  }
-
-  .svgButton:hover {
-    cursor: pointer;
-  }
-
   .section {
     padding: 20px 16px;
   }

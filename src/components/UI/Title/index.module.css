@@ -1,3 +1,25 @@
 .title {
   font-size: 20px;
 }
+
+.wrapper {
+  display: flex;
+  position: relative;
+}
+
+.svgButton {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+@media (max-width: 768px) {
+  .svgButton {
+    display: flex;
+  }
+
+  .svgButton:hover {
+    cursor: pointer;
+  }
+}

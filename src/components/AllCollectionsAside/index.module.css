@@ -1,6 +1,6 @@
 .aside {
   max-width: 392px;
-  /* min-height: 355px; */
+  height: 100%;
   display: flex;
   flex-direction: column;
   width: 100%;

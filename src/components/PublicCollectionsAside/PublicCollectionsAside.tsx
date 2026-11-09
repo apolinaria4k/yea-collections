@@ -5,6 +5,9 @@ import ButtonClose from '../UI/ButtonClose/ButtonClose';
 import styles from './index.module.css';
 import GuruProfile from '../GuruProfile/GuruProfile';
 import CompanyBlock from '../CompanyBlock/CompanyBlock';
+import CountQuestionsBlock from '../CountQuestionsBlock/CountQuestionsBlock';
+import KeyWordsDetails from '../UI/KeyWordsDetails/KeyWordsDetails';
+import SubscribeBlock from '../UI/SubscribeBlock/SubscribeBlock';
 
 interface Props {
   collection: ICollection | undefined;
@@ -17,9 +20,8 @@ const PublicCollectionsAside: React.FC<Props> = ({ collection, isVisible, setIsV
 
   return (
     <>
-      <aside className={styles.aside}>
-        <div
-          className={`${styles.blockWrapper} ${styles.filters} ${isVisible ? styles.active : ''}`}>
+      <aside className={`${styles.aside} ${isVisible ? styles.visible : ''}`}>
+        <div className={styles.blockWrapper}>
           <div className={styles.blockInner}>
             <ButtonClose setIsVisible={setIsVisible} />
             {!collection ? (
@@ -30,18 +32,24 @@ const PublicCollectionsAside: React.FC<Props> = ({ collection, isVisible, setIsV
                   title="Специализация"
                   specializations={collection.specializations}
                 />
+                <CompanyBlock
+                  title="Компания"
+                  company={collection.company?.title || collection.title}
+                />
+
+                <CountQuestionsBlock title="Количество вопросов" collection={collection} />
 
                 <PublicAccessBlock title="Доступ" isFree={collection.isFree} />
 
-                <CompanyBlock
-                  title="Компания"
-                  company={collection.company?.title || collection.title}></CompanyBlock>
+                <KeyWordsDetails keywords={collection.keywords}></KeyWordsDetails>
 
                 <div>
                   <p className={styles.author}>
                     Автор: <span className={styles.authorColor}>Дмитрий Мусиенко</span>
                   </p>
                 </div>
+
+                <SubscribeBlock />
               </div>
             )}
           </div>
