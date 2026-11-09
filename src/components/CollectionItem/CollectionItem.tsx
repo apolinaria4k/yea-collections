@@ -14,8 +14,6 @@ export const CollectionItem: React.FC<Props> = ({ collection }) => {
   const navigate = useNavigate();
 
   const handleClickCollectionItem = (id: number) => {
-    console.log('work');
-
     navigate({
       pathname: `/collections/${id}`,
     });

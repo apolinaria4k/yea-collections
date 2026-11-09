@@ -38,7 +38,7 @@ export const AllCollections: React.FC = () => {
         isFree,
       );
       setCollections(response.data.data);
-      console.log(response.data);
+      // console.log(response.data);
       const totalCount = response.data.total;
       setTotalPages(getTotalPages(totalCount));
     },

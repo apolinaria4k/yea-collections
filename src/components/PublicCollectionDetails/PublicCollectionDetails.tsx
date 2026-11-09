@@ -1,27 +1,46 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import CollectionService from '../../API/CollectionService';
 import { useFetching } from '../../hooks/useFetching';
-import type { ICollection } from '../../interfaces';
+import type { ICollection, IQuestion } from '../../interfaces';
 import styles from './index.module.css';
 import PublicCollectionsSection from '../PublicCollectionsSection/PublicCollectionsSection';
 import PublicCollectionsAside from '../PublicCollectionsAside/PublicCollectionsAside';
+import useCollections from '../../hooks/useCollections';
+import { getTotalPages } from '../../utils/getTotalPages';
 
 export const PublicCollectionDetails: React.FC = () => {
   const { collectionId } = useParams();
+  const { setTotalPages } = useCollections();
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [collection, setCollection] = useState<ICollection>();
+  const [questions, setQuestions] = useState<IQuestion[]>();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const page = Number(searchParams.get('page')) || 1;
 
   const [fetchCollection] = useFetching(async (collectionId) => {
     const response = await CollectionService.getCollectionById(Number(collectionId));
     setCollection(response.data);
   });
 
+  const [fetchAllQuestions, status, error] = useFetching(
+    async (page: number, collectionId: number) => {
+      const response = await CollectionService.getAllQuestions(page, collectionId);
+      setQuestions(response.data.data);
+      const totalCount = response.data.total;
+      setTotalPages(getTotalPages(totalCount));
+      // console.log(response.data.data);
+    },
+  );
+
   useEffect(() => {
     fetchCollection(collectionId);
   }, [collectionId]);
 
-  // const page = Number(searchParams.get('page')) || 1;
+  useEffect(() => {
+    fetchAllQuestions(page, Number(collectionId));
+  }, [page, collectionId]);
+
   // const specializations = searchParams.get('specializations') || '';
   // const isFree = searchParams.get('isFree') || '';
 
@@ -70,7 +89,22 @@ export const PublicCollectionDetails: React.FC = () => {
             <h1>Загрузка...</h1>
           ) : (
             <>
-              <PublicCollectionsSection collection={collection} setIsVisible={setIsVisible} />
+              {status === 'idle' || status === 'loading' ? (
+                // <Skeleton />
+                <h1>Загрузка...</h1>
+              ) : status === 'error' ? (
+                <h2 className={styles.title}>{error}</h2>
+              ) : !questions ? (
+                <h1>Загрузка...</h1>
+              ) : (
+                <PublicCollectionsSection
+                  collection={collection}
+                  questions={questions}
+                  status={status}
+                  error={error}
+                  setIsVisible={setIsVisible}
+                />
+              )}
               <PublicCollectionsAside
                 collection={collection}
                 isVisible={isVisible}

@@ -1,13 +1,14 @@
 import axios from 'axios';
-import type { ICollection, IColResponse, ISpecResponse } from '../interfaces';
+import type { ICollection, IColResponse, IQueResponse, ISpecResponse } from '../interfaces';
 
 const COLLECTIONS_URL = import.meta.env.VITE_COLLECTIONS_API_URL;
+const QUESTIONS_URL = import.meta.env.VITE_QUESTIONS_API_URL;
 const SPECIALIZATIONS_URL = import.meta.env.VITE_SPECIALIZATIONS_API_URL;
 const COLLECTION_BY_ID = import.meta.env.VITE_COLLECTION_BY_ID_API_URL;
 
 export default class CollectionService {
   static async getAllCollections(
-    page = 1,
+    page: number = 1,
     titleOrDescriptionSearch: string,
     specializations: string,
     isFree: string,
@@ -22,6 +23,29 @@ export default class CollectionService {
     const response = await axios.get<IColResponse>(COLLECTIONS_URL, {
       params,
     });
+    return response;
+  }
+
+  static async getAllQuestions(
+    page: number = 1,
+    collection: number,
+    // title,
+    // specializationId,
+    // skills,
+    // complexity,
+    // rate,
+  ) {
+    const params = {
+      page,
+      collection,
+      // title,
+      // specializationId,
+    };
+
+    const response = await axios.get<IQueResponse>(QUESTIONS_URL, {
+      params,
+    });
+
     return response;
   }
 

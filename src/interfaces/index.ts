@@ -5,12 +5,12 @@ export interface IColResponse {
   total: number;
 }
 
-// export interface IColByIdResponse {
-//   data: ICollection;
-//   limit: number;
-//   page: number;
-//   total: number;
-// }
+export interface IQueResponse {
+  data: IQuestion[];
+  limit: number;
+  page: number;
+  total: number;
+}
 
 export interface ISpecResponse {
   data: ISpecialization[];
@@ -20,7 +20,7 @@ export interface ISpecResponse {
 }
 
 export interface ICollection {
-  id: string;
+  id: number;
   company: ICompany | null;
   imageSrc: string;
   title: string;
@@ -32,14 +32,21 @@ export interface ICollection {
 }
 
 export interface ICompany {
-  id: string;
+  id: number;
   title: string;
   imageSrc: string | null;
 }
 
 export interface IQuestion {
-  id: string;
+  id: number;
   title: string;
+  complexity: number;
+  rate: number;
+  keywords: string[];
+  longAnswer: string;
+  shortAnswer: string;
+  questionSkills: ISkill[];
+  questionSpecializations: ISpecialization[];
 }
 
 export interface IAccess {
@@ -49,7 +56,12 @@ export interface IAccess {
 }
 
 export interface ISpecialization {
-  id: string;
+  id: number;
+  title: string;
+}
+
+export interface ISkill {
+  id: number;
   title: string;
 }
 

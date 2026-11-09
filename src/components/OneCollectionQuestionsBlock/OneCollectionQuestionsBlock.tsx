@@ -1,26 +1,19 @@
-import type { ICollection } from '../../interfaces';
+import type { IQuestion } from '../../interfaces';
+import QuestionItem from '../QuestionItem/QuestionItem';
 import styles from './index.module.css';
-import Keywords from '../UI/Keywords/Keywords';
-import Specializations from '../UI/Specializations/Specializations';
-import Description from '../UI/Description/Description';
-import DetailsWrapper from '../UI/DetailsWrapper/DetailsWrapper';
-import { useNavigate } from 'react-router-dom';
 
 interface Props {
-  collection: ICollection;
+  questions: IQuestion[];
 }
 
 const OneCollectionQuestionsBlock: React.FC<Props> = ({ questions }) => {
-  // const navigate = useNavigate();
-
   return (
     <>
       <ul className={styles.questionList}>
-        {questions.map((item) => (
-          <QuestionItem key={item.id} {...item} />
+        {questions.map((q) => (
+          <QuestionItem key={q.id} question={q} />
         ))}
       </ul>
-      <Pagination />
     </>
   );
 };

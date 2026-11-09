@@ -1,0 +1,29 @@
+.wrapper {
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 120%;
+  color: #303030;
+  background-color: #f8f8f8;
+  padding: 10px 6px;
+  border-radius: 8px;
+}
+
+.value {
+  border-radius: 4px;
+  color: #fff;
+  padding: 2px 4px;
+  background-color: #6a0bff;
+}
+
+@media (max-width: 360px) {
+  .wrapper {
+    gap: 16px;
+  }
+  .text {
+    font-size: 12px;
+  }
+
+  .value {
+    font-size: 12px;
+  }
+}
