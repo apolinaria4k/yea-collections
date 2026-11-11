@@ -8,6 +8,8 @@ import PublicCollectionsSection from '../PublicCollectionsSection/PublicCollecti
 import PublicCollectionsAside from '../PublicCollectionsAside/PublicCollectionsAside';
 import useCollections from '../../hooks/useCollections';
 import { getTotalPages } from '../../utils/getTotalPages';
+import ForMembers from '../ForMembers/ForMembers';
+import ForAllWithoutQuestions from '../ForAllWithoutQuestions/ForAllWithoutQuestions';
 
 export const PublicCollectionDetails: React.FC = () => {
   const { collectionId } = useParams();
@@ -96,6 +98,10 @@ export const PublicCollectionDetails: React.FC = () => {
                 <h2 className={styles.title}>{error}</h2>
               ) : !questions ? (
                 <h1>Загрузка...</h1>
+              ) : !collection.isFree ? (
+                <ForMembers />
+              ) : collection.isFree && !questions.length ? (
+                <ForAllWithoutQuestions />
               ) : (
                 <PublicCollectionsSection
                   collection={collection}

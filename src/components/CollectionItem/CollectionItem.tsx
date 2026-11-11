@@ -18,6 +18,7 @@ export const CollectionItem: React.FC<Props> = ({ collection }) => {
       pathname: `/collections/${id}`,
     });
   };
+
   return (
     <div className={styles.item} onClick={() => handleClickCollectionItem(Number(collection.id))}>
       <div className={styles.image}></div>

@@ -1,0 +1,142 @@
+.section {
+  width: 100%;
+  max-width: 804px;
+  flex: 1;
+  border-radius: 24px;
+  /* padding: 24px 20px 40px;
+  background-color: #fff;
+  box-shadow: 0px 4px 10px 0px #6a63761a; */
+}
+
+.wrapper {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 20px;
+  margin-bottom: 24px;
+  position: relative;
+}
+
+.wrapperTitle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  border-bottom: 0.5px solid #e8e8e8;
+  padding-bottom: 20px;
+  margin-bottom: 24px;
+  justify-content: space-between;
+}
+
+.wrapperMain {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0px 4px 10px 0px #6a63761a;
+  padding: 24px;
+  border-radius: 10px;
+}
+
+.wrapperQuestionsList {
+  width: 100%;
+  max-width: 804px;
+  flex: 1;
+  border-radius: 24px;
+  padding: 24px 20px 40px;
+  background-color: #fff;
+  box-shadow: 0px 4px 10px 0px #6a63761a;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.subTitle {
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 120%;
+  text-align: center;
+  color: #474747;
+}
+
+.linkWrapper {
+  display: flex;
+  justify-content: right;
+  position: relative;
+}
+
+.secondLinkWrapper {
+  display: none;
+  justify-content: right;
+  position: relative;
+}
+
+.link {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 110%;
+  color: #6a0bff;
+  padding-right: 24px;
+}
+
+.link::after {
+  content: '';
+  position: absolute;
+  display: flex;
+  width: 18px;
+  height: 14px;
+  top: 50%;
+  right: 0;
+  transform: translate(0, -50%);
+  background-image: url('/public/bigArrowLeft.svg');
+}
+
+.active {
+  color: #6a0bff;
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 20px 16px;
+  }
+}
+
+@media (max-width: 360px) {
+  .section {
+    padding: 20px 10px;
+  }
+  .title {
+    font-size: 20px;
+  }
+
+  .subTitle {
+    font-size: 16px;
+  }
+
+  .linkWrapper {
+    display: none;
+  }
+  .wrapperMain {
+    margin-bottom: 20px;
+  }
+
+  .secondLinkWrapper {
+    display: flex;
+  }
+
+  .link {
+    font-size: 12px;
+  }
+
+  .wrapperQuestionsList {
+    padding: 20px 10px;
+  }
+
+  .image {
+    width: 40px;
+    height: 40px;
+  }
+}
