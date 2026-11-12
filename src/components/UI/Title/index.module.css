@@ -11,15 +11,28 @@
   display: none;
   position: absolute;
   top: 0;
-  right: 0;
+  right: -24px;
 }
 
 @media (max-width: 768px) {
+  .title {
+    max-width: 420px;
+  }
   .svgButton {
     display: flex;
   }
 
   .svgButton:hover {
     cursor: pointer;
+  }
+}
+
+@media (max-width: 360px) {
+  .title {
+    max-width: 400px;
+  }
+
+  .svgButton {
+    right: 0;
   }
 }

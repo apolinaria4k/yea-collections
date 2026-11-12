@@ -50,19 +50,23 @@
 }
 
 @media (max-width: 768px) {
-  .section {
+  /* .section {
     padding: 20px 16px;
-  }
+  } */
 }
 
 @media (max-width: 360px) {
   .section {
-    padding: 20px 10px;
+    padding: 0;
   }
   .questionList {
     max-width: 340px;
   }
   .title {
     font-size: 20px;
+  }
+
+  .wrapperQuestionsList {
+    padding: 20px 10px;
   }
 }

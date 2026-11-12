@@ -18,8 +18,9 @@ interface Props {
 const PublicCollectionsAside: React.FC<Props> = ({ collection, isVisible, setIsVisible }) => {
   return (
     <>
-      <aside className={`${styles.aside} ${isVisible ? styles.visible : ''}`}>
-        <div className={styles.blockWrapper}>
+      <aside className={`${styles.aside}`}>
+        <div
+          className={`${styles.blockWrapper} ${styles.filters} ${isVisible ? styles.visible : ''}`}>
           <div className={styles.blockInner}>
             <ButtonClose setIsVisible={setIsVisible} />
             {!collection ? (

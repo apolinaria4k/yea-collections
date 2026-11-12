@@ -1,12 +1,10 @@
 .aside {
   max-width: 392px;
-  /* height: 100%; */
   display: flex;
   flex-direction: column;
   width: 100%;
   gap: 20px;
   border-radius: 24px;
-  /* background-color: #fff; */
 }
 .blockWrapper {
   background-color: #fff;
@@ -24,11 +22,9 @@
 .blockInner {
   display: flex;
   flex-direction: column;
-  /* gap: 24px; */
 }
 .wrapper {
   display: none;
-  /* margin-bottom: 8px; */
 }
 
 .variants {
@@ -64,16 +60,24 @@
 }
 
 @media (max-width: 768px) {
-  .aside {
+  .filters {
+    width: 100%;
     max-width: 328px;
     display: none;
     position: absolute;
     top: -22px;
     right: 0;
     border-radius: 0;
-
     box-shadow: 0px 4px 10px 0px #6a63761a;
     z-index: 100;
+  }
+
+  .aside {
+    max-width: 708px;
+  }
+
+  .blockInner {
+    width: 100%;
   }
 
   .asideCloseButton:hover {
@@ -90,18 +94,23 @@
   }
 
   .blockWrapper {
-    border-radius: 0;
-    padding: 16px;
-  }
-
-  .border {
-    display: none;
+    /* border-radius: 0; */
+    /* padding: 16px; */
   }
 }
 
 @media (max-width: 360px) {
   .aside {
+    width: 100%;
     max-width: 360px;
     padding: 0;
+  }
+
+  .filters {
+    max-width: 360px;
+  }
+
+  .blockWrapper {
+    padding: 20px 10px;
   }
 }

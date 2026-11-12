@@ -147,6 +147,10 @@ button {
   .buttons {
     display: none;
   }
+
+  .nav {
+    gap: 20px;
+  }
   .maxLogo {
     display: none;
   }

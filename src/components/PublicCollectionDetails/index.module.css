@@ -20,6 +20,7 @@
   .wrapperMain {
     margin-bottom: 80px;
     padding: 0 30px 0 30px;
+    flex-direction: column;
   }
 }
 
@@ -27,5 +28,6 @@
   .wrapperMain {
     margin-bottom: 40px;
     padding: 0 10px 0 10px;
+    /* flex-direction: column; */
   }
 }
