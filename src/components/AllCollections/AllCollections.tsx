@@ -27,6 +27,7 @@ export const AllCollections: FC = () => {
 
   const [fetchCollections, status, error] = useFetching(
     async (
+      signal: AbortSignal,
       page: number,
       titleOrDescriptionSearch: string,
       specializations: string,
@@ -37,6 +38,7 @@ export const AllCollections: FC = () => {
         titleOrDescriptionSearch,
         specializations,
         isFree,
+        signal,
       );
       setCollections(response.data.data);
       const totalCount = response.data.total;
@@ -44,8 +46,8 @@ export const AllCollections: FC = () => {
     },
   );
 
-  const [fetchSpecializations] = useFetching(async () => {
-    const response = await CollectionService.getAllSpecializations();
+  const [fetchSpecializations] = useFetching(async (signal: AbortSignal) => {
+    const response = await CollectionService.getAllSpecializations(undefined, signal);
     setSpecs(response.data.data);
     setTotalSpecs(response.data.total);
   });

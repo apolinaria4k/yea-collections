@@ -28,6 +28,7 @@ export default class CollectionService {
     titleOrDescriptionSearch: string,
     specializations: string,
     isFree: string,
+    signal?: AbortSignal,
   ) {
     const params = {
       page,
@@ -38,11 +39,12 @@ export default class CollectionService {
 
     const response = await axios.get<IColResponse>(COLLECTIONS_URL, {
       params,
+      signal,
     });
     return response;
   }
 
-  static async getAllQuestions(page: number = 1, collection: number) {
+  static async getAllQuestions(page: number = 1, collection: number, signal?: AbortSignal) {
     const params = {
       page,
       collection,
@@ -50,27 +52,31 @@ export default class CollectionService {
 
     const response = await axios.get<IQueResponse>(QUESTIONS_URL, {
       params,
+      signal,
     });
 
     return response;
   }
 
-  static async getAllSpecializations(limit: number = 5) {
+  static async getAllSpecializations(limit: number = 5, signal?: AbortSignal) {
     const response = await axios.get<ISpecResponse>(SPECIALIZATIONS_URL, {
       params: {
         limit,
       },
+      signal,
     });
     return response;
   }
 
-  static async getCollectionById(collectionId: number) {
-    const response = await axios.get<ICollection>(`${COLLECTION_BY_ID}${collectionId}/public`);
+  static async getCollectionById(collectionId: number, signal?: AbortSignal) {
+    const response = await axios.get<ICollection>(`${COLLECTION_BY_ID}${collectionId}/public`, {
+      signal,
+    });
     return response;
   }
 
-  static async getQuestionById(id: number) {
-    const response = await axios.get<IQuestion>(`${QUESTION_BY_ID_URL}${id}`);
+  static async getQuestionById(id: number, signal: AbortSignal) {
+    const response = await axios.get<IQuestion>(`${QUESTION_BY_ID_URL}${id}`, { signal });
 
     return response;
   }

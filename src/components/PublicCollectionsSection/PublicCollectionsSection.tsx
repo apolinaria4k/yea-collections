@@ -5,6 +5,7 @@ import { PublicCollectionItem } from '../PublicCollectionItem/PublicCollectionIt
 import Pagination from '../UI/Pagination/Pagination';
 import type { FC, Dispatch, SetStateAction } from 'react';
 import styles from './index.module.css';
+import OneCollectionSkeleton from '../OneCollectionSkeleton/OneCollectionSkeleton';
 
 interface Props {
   collection: ICollection | undefined;
@@ -27,8 +28,7 @@ const PublicCollectionsSection: FC<Props> = ({ collection, setIsVisible, status,
           </div>
 
           {status === 'idle' || status === 'loading' ? (
-            // <Skeleton />
-            <h1>Загрузка...</h1>
+            <OneCollectionSkeleton />
           ) : status === 'error' ? (
             <h2 className={styles.title}>{error}</h2>
           ) : !questions.length ? (
