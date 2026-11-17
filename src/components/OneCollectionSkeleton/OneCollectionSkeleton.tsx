@@ -2,7 +2,7 @@ import styles from './index.module.css';
 import type { FC } from 'react';
 
 interface Props {
-  count: number;
+  count?: number;
 }
 
 const OneCollectionSkeleton: FC<Props> = ({ count = 10 }) => {

@@ -33,7 +33,7 @@
   left: 0;
   transform: translate(0, -50%);
   height: 16px;
-  background-image: url('/public/arrowLeftGrey.svg');
+  background-image: url('/arrowLeftGrey.svg');
 }
 
 .linkNext::before {
@@ -45,7 +45,7 @@
   right: 0;
   transform: translate(0, -50%);
   height: 16px;
-  background-image: url('/public/arrowRightGrey.svg');
+  background-image: url('/arrowRightGrey.svg');
 }
 
 .repeatButton {

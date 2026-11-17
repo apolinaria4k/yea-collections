@@ -2,7 +2,7 @@ import classes from './index.module.css';
 import type { FC } from 'react';
 
 interface Props {
-  count: number;
+  count?: number;
 }
 
 const AllCollectionsSkeleton: FC<Props> = ({ count = 10 }) => {

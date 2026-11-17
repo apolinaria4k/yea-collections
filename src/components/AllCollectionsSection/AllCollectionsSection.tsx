@@ -44,7 +44,7 @@ const AllCollectionsSection: FC<Props> = ({ status, error, setIsVisible }) => {
         ) : status === 'error' ? (
           <h2 className={styles.title}>{error}</h2>
         ) : !collections.length ? (
-          <h2 className={styles.title}>Вопросов с заданными параметрами не найдено</h2>
+          <h2 className={styles.title}>Коллекций с заданными параметрами не найдено</h2>
         ) : (
           <>
             <div className={styles.questionList}>

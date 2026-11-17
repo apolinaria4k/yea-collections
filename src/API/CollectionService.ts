@@ -6,12 +6,21 @@ import type {
   IQuestion,
   ISpecResponse,
 } from '../interfaces';
+import { CONFIG } from '../config/env';
 
-const COLLECTIONS_URL = import.meta.env.VITE_COLLECTIONS_API_URL;
-const QUESTIONS_URL = import.meta.env.VITE_QUESTIONS_API_URL;
-const SPECIALIZATIONS_URL = import.meta.env.VITE_SPECIALIZATIONS_API_URL;
-const COLLECTION_BY_ID = import.meta.env.VITE_COLLECTION_BY_ID_API_URL;
-const QUESTION_BY_ID_URL = import.meta.env.VITE_QUESTION_BY_ID_API_URL;
+function getRequiredEnv(key: keyof typeof CONFIG): string {
+  const value = CONFIG[key];
+  if (!value) {
+    throw new Error(`Не задана переменная окружения ${key}. Проверьте .env (см. .env.example).`);
+  }
+  return value;
+}
+
+const COLLECTIONS_URL = getRequiredEnv('VITE_COLLECTIONS_API_URL');
+const QUESTIONS_URL = getRequiredEnv('VITE_QUESTIONS_API_URL');
+const SPECIALIZATIONS_URL = getRequiredEnv('VITE_SPECIALIZATIONS_API_URL');
+const COLLECTION_BY_ID = getRequiredEnv('VITE_COLLECTION_BY_ID_API_URL');
+const QUESTION_BY_ID_URL = getRequiredEnv('VITE_QUESTION_BY_ID_API_URL');
 
 export default class CollectionService {
   static async getAllCollections(

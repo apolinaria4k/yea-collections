@@ -47,31 +47,35 @@ export const PublicCollectionDetails: FC = () => {
     <>
       <main className={styles.main}>
         <div className={styles.wrapperMain}>
-          <>
-            {status === 'idle' || status === 'loading' ? (
-              <OneCollectionSkeleton count={10} />
-            ) : status === 'error' ? (
-              <h2 className={styles.title}>{error}</h2>
-            ) : !questions ? (
-              <OneCollectionSkeleton count={10} />
-            ) : !collection!.isFree ? (
-              <ForMembers />
-            ) : collection!.isFree && !questions.length ? (
-              <ForAllWithoutQuestions />
-            ) : (
-              <PublicCollectionsSection
+          {!collection ? (
+            <OneCollectionSkeleton />
+          ) : (
+            <>
+              {status === 'idle' || status === 'loading' ? (
+                <OneCollectionSkeleton />
+              ) : status === 'error' ? (
+                <h2 className={styles.title}>{error}</h2>
+              ) : !questions ? (
+                <OneCollectionSkeleton />
+              ) : !collection!.isFree ? (
+                <ForMembers />
+              ) : collection!.isFree && !questions.length ? (
+                <ForAllWithoutQuestions />
+              ) : (
+                <PublicCollectionsSection
+                  collection={collection}
+                  status={status}
+                  error={error}
+                  setIsVisible={setIsVisible}
+                />
+              )}
+              <PublicCollectionsAside
                 collection={collection}
-                status={status}
-                error={error}
+                isVisible={isVisible}
                 setIsVisible={setIsVisible}
               />
-            )}
-            <PublicCollectionsAside
-              collection={collection}
-              isVisible={isVisible}
-              setIsVisible={setIsVisible}
-            />
-          </>
+            </>
+          )}
         </div>
       </main>
     </>

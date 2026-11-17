@@ -12,6 +12,11 @@
   margin-bottom: 130px;
 }
 
+.title {
+  font-size: 24px;
+  font-weight: 500;
+}
+
 @media (max-width: 768px) {
   .main {
     position: relative;
