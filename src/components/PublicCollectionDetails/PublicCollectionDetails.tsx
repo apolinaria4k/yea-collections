@@ -8,18 +8,19 @@ import { getTotalPages } from '../../utils/getTotalPages';
 import ForAllWithoutQuestions from '../ForAllWithoutQuestions/ForAllWithoutQuestions';
 import ForMembers from '../ForMembers/ForMembers';
 import PublicCollectionsAside from '../PublicCollectionsAside/PublicCollectionsAside';
+import type { FC } from 'react';
 import PublicCollectionsSection from '../PublicCollectionsSection/PublicCollectionsSection';
 import styles from './index.module.css';
 
-export const PublicCollectionDetails: React.FC = () => {
-  const { collectionId } = useParams();
+export const PublicCollectionDetails: FC = () => {
+  const { collectionId } = useParams<{ collectionId: string }>();
   const { setTotalPages, setQuestions, questions } = useCollections();
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [collection, setCollection] = useState<ICollection>();
   const [searchParams] = useSearchParams();
   const page = Number(searchParams.get('page')) || 1;
 
-  const [fetchCollection] = useFetching(async (collectionId) => {
+  const [fetchCollection] = useFetching(async (collectionId: number) => {
     const response = await CollectionService.getCollectionById(Number(collectionId));
     setCollection(response.data);
   });
@@ -34,7 +35,7 @@ export const PublicCollectionDetails: React.FC = () => {
   );
 
   useEffect(() => {
-    fetchCollection(collectionId);
+    fetchCollection(Number(collectionId));
   }, [collectionId]);
 
   useEffect(() => {

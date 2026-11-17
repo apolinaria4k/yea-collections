@@ -23,8 +23,8 @@ export default class CollectionService {
     const params = {
       page,
       titleOrDescriptionSearch,
-      specializations: specializations || null,
-      isFree: isFree || null,
+      specializations: specializations || undefined,
+      isFree: isFree || undefined,
     };
 
     const response = await axios.get<IColResponse>(COLLECTIONS_URL, {
@@ -46,7 +46,7 @@ export default class CollectionService {
     return response;
   }
 
-  static async getAllSpecializations(limit: number | undefined = 5) {
+  static async getAllSpecializations(limit: number = 5) {
     const response = await axios.get<ISpecResponse>(SPECIALIZATIONS_URL, {
       params: {
         limit,

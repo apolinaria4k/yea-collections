@@ -1,11 +1,11 @@
 import classes from './index.module.css';
+import type { FC } from 'react';
 
 interface Props {
-  id: number;
   title: string;
 }
 
-const SkillDetailedQuestion: React.FC<Props> = ({ title }) => {
+const SkillDetailedQuestion: FC<Props> = ({ title }) => {
   return (
     <>
       <div className={classes.button}>{title}</div>

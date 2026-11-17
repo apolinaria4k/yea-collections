@@ -1,11 +1,12 @@
 import Keyword from '../Keyword/Keyword';
 import styles from './index.module.css';
+import type { FC } from 'react';
 
 interface Props {
   keywords: string[];
 }
 
-const Keywords: React.FC<Props> = ({ keywords }) => {
+const Keywords: FC<Props> = ({ keywords }) => {
   return (
     <ul className={styles.keywordsWrapper}>
       {keywords.map((k) => (

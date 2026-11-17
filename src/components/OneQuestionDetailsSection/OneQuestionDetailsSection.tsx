@@ -1,5 +1,5 @@
 import OneQuestionDetailsTitle from '../OneQuestionDetailsTitle/OneQuestionDetailsTitle';
-
+import type { FC, Dispatch, SetStateAction } from 'react';
 import type { IQuestion } from '../../interfaces';
 import { sanitizeHtml } from '../../utils/sanitizeHtml';
 import NextPreviousButtons from '../NextPreviousButtons/NextPreviousButtons';
@@ -9,10 +9,10 @@ import styles from './index.module.css';
 
 interface Props {
   question: IQuestion;
-  setIsVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsVisible: Dispatch<SetStateAction<boolean>>;
 }
 
-const OneQuestionDetailsSection: React.FC<Props> = ({ question, setIsVisible }) => {
+const OneQuestionDetailsSection: FC<Props> = ({ question, setIsVisible }) => {
   return (
     <section className={styles.section}>
       <div className={styles.blockWrapper}>

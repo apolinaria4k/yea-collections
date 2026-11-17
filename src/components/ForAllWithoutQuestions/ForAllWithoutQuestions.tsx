@@ -1,6 +1,6 @@
 import styles from './index.module.css';
-
-const ForAllWithoutQuestions: React.FC = () => {
+import type { FC } from 'react';
+const ForAllWithoutQuestions: FC = () => {
   return (
     <>
       <section className={styles.section}>

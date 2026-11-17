@@ -1,3 +1,5 @@
+import type { Dispatch, SetStateAction } from 'react';
+
 export interface IColResponse {
   data: ICollection[];
   limit: number;
@@ -71,17 +73,17 @@ export type ListError = string | null;
 
 export interface ICollectionsContextValue {
   collections: ICollection[];
-  setCollections: React.Dispatch<React.SetStateAction<ICollection[]>>;
+  setCollections: Dispatch<SetStateAction<ICollection[]>>;
   totalPages: number;
-  setTotalPages: React.Dispatch<React.SetStateAction<number>>;
+  setTotalPages: Dispatch<SetStateAction<number>>;
   questions: IQuestion[];
-  setQuestions: React.Dispatch<React.SetStateAction<IQuestion[]>>;
+  setQuestions: Dispatch<SetStateAction<IQuestion[]>>;
   loadedPage: number;
-  setLoadedPage: React.Dispatch<React.SetStateAction<number>>;
+  setLoadedPage: Dispatch<SetStateAction<number>>;
   listStatus: Status;
-  setListStatus: React.Dispatch<React.SetStateAction<Status>>;
+  setListStatus: Dispatch<SetStateAction<Status>>;
   listError: ListError;
-  setListError: React.Dispatch<React.SetStateAction<ListError>>;
+  setListError: Dispatch<SetStateAction<ListError>>;
   retryTick: number;
-  setRetryTick: React.Dispatch<React.SetStateAction<number>>;
+  setRetryTick: Dispatch<SetStateAction<number>>;
 }

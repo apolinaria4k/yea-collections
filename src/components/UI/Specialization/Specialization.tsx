@@ -1,10 +1,11 @@
 import type { ISpecialization } from '../../../interfaces';
 import styles from './index.module.css';
+import type { FC } from 'react';
 interface Props {
   specialization: ISpecialization;
 }
 
-const Specialization: React.FC<Props> = ({ specialization }) => {
+const Specialization: FC<Props> = ({ specialization }) => {
   return <li className={styles.specialization}>{specialization.title}</li>;
 };
 

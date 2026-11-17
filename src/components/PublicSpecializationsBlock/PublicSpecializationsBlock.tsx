@@ -2,13 +2,14 @@ import type { ISpecialization } from '../../interfaces';
 import styles from '../AllCollectionsAside/index.module.css';
 import MyTitle from '../UI/MyTitle/MyTitle';
 import PublicSpecializationAside from '../UI/PublicSpecializationAside/PublicSpecializationAside';
+import type { FC } from 'react';
 
 interface Props {
   specializations: ISpecialization[];
   title: string;
 }
 
-const PublicSpecializationsBlock: React.FC<Props> = ({ title, specializations }) => {
+const PublicSpecializationsBlock: FC<Props> = ({ title, specializations }) => {
   return (
     <>
       <div>

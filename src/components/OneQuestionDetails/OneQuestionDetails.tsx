@@ -9,12 +9,12 @@ import type { IQuestion } from '../../interfaces';
 import { getTotalPages } from '../../utils/getTotalPages';
 import styles from './index.module.css';
 import NotFound from '../NotFound/NotFound';
-
-const OneQuestionDetails: React.FC = () => {
+import type { FC, ReactNode } from 'react';
+const OneQuestionDetails: FC = () => {
   const location = useLocation();
   const { setQuestions, setLoadedPage, setTotalPages, setListStatus, setListError, retryTick } =
     useCollections();
-  const { questionId, collectionId } = useParams();
+  const { questionId, collectionId } = useParams<{ questionId: string; collectionId: string }>();
   const [questionData, setQuestionData] = useState<IQuestion>();
   const [isVisible, setIsVisible] = useState(false);
   const [searchParams] = useSearchParams();
@@ -26,14 +26,12 @@ const OneQuestionDetails: React.FC = () => {
       setQuestions(response.data.data);
       const totalCount = response.data.total;
       setTotalPages(getTotalPages(totalCount));
-      console.log(response.data.data);
     },
   );
 
-  const [fetchQuestionData] = useFetching(async (questionId) => {
+  const [fetchQuestionData] = useFetching(async (questionId: number) => {
     const response = await CollectionService.getQuestionById(Number(questionId));
     setQuestionData(response.data);
-    console.log(response.data);
   });
 
   useEffect(() => {
@@ -49,7 +47,7 @@ const OneQuestionDetails: React.FC = () => {
     fetchQuestionData(Number(questionId));
   }, [questionId]);
 
-  let content: React.ReactElement;
+  let content: ReactNode;
 
   if (questionsStatus === 'idle' || questionsStatus === 'loading') {
     content = <h1>Загрузка</h1>;

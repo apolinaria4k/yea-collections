@@ -1,30 +1,34 @@
 import { useSearchParams } from 'react-router-dom';
 import styles from './index.module.css';
 import useCollections from '../../../hooks/useCollections';
+import type { FC } from 'react';
 import { usePagination } from '../../../hooks/usePagination';
 
-const Pagination: React.FC = () => {
+const Pagination: FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { totalPages } = useCollections();
   const page = Number(searchParams.get('page')) || 1;
   const pagesArray = usePagination(page, totalPages);
 
   const handleClickPage = (page: number) => {
-    searchParams.set('page', String(page));
-    setSearchParams(searchParams);
+    const next = new URLSearchParams(searchParams);
+    next.set('page', String(page));
+    setSearchParams(next);
   };
 
   const handleNextPage = () => {
     if (page < totalPages) {
-      searchParams.set('page', String(page + 1));
-      setSearchParams(searchParams);
+      const next = new URLSearchParams(searchParams);
+      next.set('page', String(page + 1));
+      setSearchParams(next);
     }
   };
 
   const handlePreviousPage = () => {
     if (page > 1) {
-      searchParams.set('page', String(page - 1));
-      setSearchParams(searchParams);
+      const next = new URLSearchParams(searchParams);
+      next.set('page', String(page - 1));
+      setSearchParams(next);
     }
   };
 
@@ -55,7 +59,7 @@ const Pagination: React.FC = () => {
           <button
             disabled={p === '...'}
             onClick={() => typeof p === 'number' && handleClickPage(p)}
-            key={index}
+            key={typeof p === 'number' ? `page-${p}` : `dots-${index}`}
             className={page === p ? `${styles.page} ${styles.active}` : styles.page}>
             {p}
           </button>

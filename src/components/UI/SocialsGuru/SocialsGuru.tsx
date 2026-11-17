@@ -1,6 +1,6 @@
 import styles from './index.module.css';
 
-export default function Socials() {
+export default function SocialsGuru() {
   return (
     <div className={styles.linkList}>
       <a className={styles.link} href="#">

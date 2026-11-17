@@ -1,8 +1,8 @@
 import useCollections from '../../hooks/useCollections';
 import QuestionItem from '../QuestionItem/QuestionItem';
 import styles from './index.module.css';
-
-const OneCollectionQuestionsBlock: React.FC = () => {
+import type { FC } from 'react';
+const OneCollectionQuestionsBlock: FC = () => {
   const { questions } = useCollections();
   return (
     <>

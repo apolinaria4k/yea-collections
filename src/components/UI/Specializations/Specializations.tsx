@@ -6,7 +6,7 @@ interface Props {
   specializations: ISpecialization[];
 }
 
-const Specializations: React.FC<Props> = ({ specializations }) => {
+const Specializations: FC<Props> = ({ specializations }) => {
   return (
     <ul className={styles.specializationsWrapper}>
       {specializations.map((s) => (

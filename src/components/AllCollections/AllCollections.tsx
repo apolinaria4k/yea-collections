@@ -1,16 +1,17 @@
+import type { FC } from 'react';
 import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import CollectionService from '../../API/CollectionService';
+import useCollections from '../../hooks/useCollections';
+import { useDebounce } from '../../hooks/useDebounce';
+import { useFetching } from '../../hooks/useFetching';
+import type { ISpecialization } from '../../interfaces';
+import { getTotalPages } from '../../utils/getTotalPages';
 import AllCollectionsAside from '../AllCollectionsAside/AllCollectionsAside';
 import AllCollectionsSection from '../AllCollectionsSection/AllCollectionsSection';
 import styles from './index.module.css';
-import { useFetching } from '../../hooks/useFetching';
-import CollectionService from '../../API/CollectionService';
-import useCollections from '../../hooks/useCollections';
-import { getTotalPages } from '../../utils/getTotalPages';
-import { useSearchParams } from 'react-router-dom';
-import { useDebounce } from '../../hooks/useDebounce';
-import type { ISpecialization } from '../../interfaces';
 
-export const AllCollections: React.FC = () => {
+export const AllCollections: FC = () => {
   const { collections, setCollections, setTotalPages } = useCollections();
   const [specs, setSpecs] = useState<ISpecialization[]>([]);
   const [totalSpecs, setTotalSpecs] = useState<number>(5);

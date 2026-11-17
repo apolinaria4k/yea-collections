@@ -1,11 +1,12 @@
 import styles from './index.module.css';
+import type { FC, Dispatch, SetStateAction } from 'react';
 
 interface Props {
   title: string;
-  setIsVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsVisible: Dispatch<SetStateAction<boolean>>;
 }
 
-const Title: React.FC<Props> = ({ title, setIsVisible }) => {
+const Title: FC<Props> = ({ title, setIsVisible }) => {
   return (
     <div className={styles.wrapper}>
       <p className={styles.title}>{title}</p>

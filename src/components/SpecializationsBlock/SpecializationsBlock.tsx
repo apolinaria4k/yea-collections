@@ -5,16 +5,17 @@ import ButtonLookAll from '../UI/ButtonLookAll/ButtonLookAll';
 import { useFetching } from '../../hooks/useFetching';
 import CollectionService from '../../API/CollectionService';
 import { useState } from 'react';
+import type { FC, Dispatch, SetStateAction } from 'react';
 import SpecializationAside from '../UI/SpecializationAside/SpecializationAside';
 
 interface Props {
   title: string;
   specializations: ISpecialization[];
-  setSpecializations: React.Dispatch<React.SetStateAction<ISpecialization[]>>;
+  setSpecializations: Dispatch<SetStateAction<ISpecialization[]>>;
   totalSpecs: number;
 }
 
-const SpecializationsBlock: React.FC<Props> = ({
+const SpecializationsBlock: FC<Props> = ({
   title,
   specializations,
   setSpecializations,

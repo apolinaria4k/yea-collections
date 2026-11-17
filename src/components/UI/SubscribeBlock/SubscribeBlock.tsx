@@ -1,6 +1,7 @@
 import styles from './index.module.css';
+import type { FC } from 'react';
 
-const SubscribeBlock: React.FC = () => {
+const SubscribeBlock: FC = () => {
   return (
     <div className={styles.wrapper}>
       <a className={styles.link} href="#">

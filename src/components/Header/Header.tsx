@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 import Navigation from '../UI/Navigation/Navigation';
 
 export default function Header() {
-  const [isPrepareMenuVisible, setIsPrepareMenuVisible] = useState<boolean>(false);
-  const [isBurgerMenuVisible, setIsBurgerMenuVisible] = useState<boolean>(false);
+  const [isPrepareMenuVisible, setIsPrepareMenuVisible] = useState(false);
+  const [isBurgerMenuVisible, setIsBurgerMenuVisible] = useState(false);
   const handleClick = (): void => {
     setIsPrepareMenuVisible((prev) => !prev);
   };

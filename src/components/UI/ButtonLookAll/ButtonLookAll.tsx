@@ -1,11 +1,12 @@
 import styles from './index.module.css';
+import type { FC } from 'react';
 
 interface Props {
   isLookAll: boolean;
   onClick: () => void;
 }
 
-const ButtonClose: React.FC<Props> = ({ isLookAll, onClick }) => {
+const ButtonLookAll: FC<Props> = ({ isLookAll, onClick }) => {
   return (
     <div>
       <button onClick={onClick} className={styles.button}>
@@ -15,4 +16,4 @@ const ButtonClose: React.FC<Props> = ({ isLookAll, onClick }) => {
   );
 };
 
-export default ButtonClose;
+export default ButtonLookAll;

@@ -8,14 +8,15 @@ import CompanyBlock from '../CompanyBlock/CompanyBlock';
 import CountQuestionsBlock from '../CountQuestionsBlock/CountQuestionsBlock';
 import KeyWordsDetails from '../UI/KeyWordsDetails/KeyWordsDetails';
 import SubscribeBlock from '../UI/SubscribeBlock/SubscribeBlock';
+import type { FC, Dispatch, SetStateAction } from 'react';
 
 interface Props {
   collection: ICollection | undefined;
   isVisible: boolean;
-  setIsVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsVisible: Dispatch<SetStateAction<boolean>>;
 }
 
-const PublicCollectionsAside: React.FC<Props> = ({ collection, isVisible, setIsVisible }) => {
+const PublicCollectionsAside: FC<Props> = ({ collection, isVisible, setIsVisible }) => {
   return (
     <>
       <aside className={`${styles.aside}`}>
@@ -36,7 +37,10 @@ const PublicCollectionsAside: React.FC<Props> = ({ collection, isVisible, setIsV
                   company={collection.company?.title || collection.title}
                 />
 
-                <CountQuestionsBlock title="Количество вопросов" collection={collection} />
+                <CountQuestionsBlock
+                  title="Количество вопросов"
+                  questionsCount={collection.questionsCount}
+                />
 
                 <PublicAccessBlock title="Доступ" isFree={collection.isFree} />
 

@@ -1,9 +1,10 @@
 import styles from './index.module.css';
+import type { FC } from 'react';
 interface Props {
   questionsCount: number;
 }
 
-const CountQuestions: React.FC<Props> = ({ questionsCount }) => {
+const CountQuestions: FC<Props> = ({ questionsCount }) => {
   return (
     <>
       <p className={`${styles.details} ${styles.questions}`}>

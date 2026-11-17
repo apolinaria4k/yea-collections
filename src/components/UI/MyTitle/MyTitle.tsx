@@ -1,10 +1,11 @@
 import styles from './index.module.css';
+import type { FC } from 'react';
 
 interface Props {
   title: string;
 }
 
-const MyTitle: React.FC<Props> = ({ title }) => {
+const MyTitle: FC<Props> = ({ title }) => {
   return <p className={styles.title}>{title}</p>;
 };
 

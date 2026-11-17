@@ -1,18 +1,19 @@
 import useCollections from '../../hooks/useCollections';
-import type { ICollection, Status } from '../../interfaces';
+import type { ICollection, ListError, Status } from '../../interfaces';
 import OneCollectionQuestionsBlock from '../OneCollectionQuestionsBlock/OneCollectionQuestionsBlock';
 import { PublicCollectionItem } from '../PublicCollectionItem/PublicCollectionItem';
 import Pagination from '../UI/Pagination/Pagination';
+import type { FC, Dispatch, SetStateAction } from 'react';
 import styles from './index.module.css';
 
 interface Props {
   collection: ICollection | undefined;
   status: Status;
-  error: string | null;
-  setIsVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  error: ListError;
+  setIsVisible: Dispatch<SetStateAction<boolean>>;
 }
 
-const PublicCollectionsSection: React.FC<Props> = ({ collection, setIsVisible, status, error }) => {
+const PublicCollectionsSection: FC<Props> = ({ collection, setIsVisible, status, error }) => {
   const { questions } = useCollections();
   return (
     <>

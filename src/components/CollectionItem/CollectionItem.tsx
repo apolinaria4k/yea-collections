@@ -5,12 +5,13 @@ import Specializations from '../UI/Specializations/Specializations';
 import Description from '../UI/Description/Description';
 import DetailsWrapper from '../UI/DetailsWrapper/DetailsWrapper';
 import { useNavigate } from 'react-router-dom';
+import type { FC } from 'react';
 
 interface Props {
   collection: ICollection;
 }
 
-export const CollectionItem: React.FC<Props> = ({ collection }) => {
+export const CollectionItem: FC<Props> = ({ collection }) => {
   const navigate = useNavigate();
 
   const handleClickCollectionItem = (id: number) => {
@@ -20,7 +21,7 @@ export const CollectionItem: React.FC<Props> = ({ collection }) => {
   };
 
   return (
-    <div className={styles.item} onClick={() => handleClickCollectionItem(Number(collection.id))}>
+    <div className={styles.item} onClick={() => handleClickCollectionItem(collection.id)}>
       <div className={styles.image}></div>
       <div className={styles.wrapper}>
         <Keywords keywords={collection.keywords} />

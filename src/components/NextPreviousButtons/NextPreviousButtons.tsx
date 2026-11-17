@@ -2,16 +2,17 @@ import { useRef, useState } from 'react';
 import { useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import useCollections from '../../hooks/useCollections';
 import styles from './index.module.css';
+import type { FC } from 'react';
 
-const NextPreviousButtons: React.FC = () => {
+const NextPreviousButtons: FC = () => {
   const location = useLocation();
   const { questions, totalPages, setRetryTick } = useCollections();
-  const { questionId, collectionId } = useParams();
+  const { questionId, collectionId } = useParams<{ questionId: string; collectionId: string }>();
   const [searchParams, setSearchParams] = useSearchParams();
   const page = Number(searchParams.get('page')) || 1;
   const navigate = useNavigate();
-  const pendingRef = useRef(null);
-  const [failedTarget, setFailedTarget] = useState(null);
+  const pendingRef = useRef<number | null>(null);
+  const [failedTarget, setFailedTarget] = useState<number | null>(null);
 
   const changePage = (page: number) => {
     const next = new URLSearchParams(searchParams);

@@ -1,11 +1,11 @@
 import { useMemo } from 'react';
 
-export const usePagination = (currentPage: number, totalPages: number) => {
+export const usePagination = (currentPage: number, totalPages: number): (number | string)[] => {
   const pagesArray = useMemo(() => {
     const delta = 2;
-    const range = [];
-    const rangeWithDots = [];
-    let last;
+    const range: number[] = [];
+    const rangeWithDots: (number | string)[] = [];
+    let last: number | undefined;
 
     if (totalPages === 1) {
       rangeWithDots.push(1);

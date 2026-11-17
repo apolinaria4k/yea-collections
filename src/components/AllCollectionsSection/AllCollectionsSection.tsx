@@ -1,16 +1,17 @@
 import useCollections from '../../hooks/useCollections';
-import type { Status } from '../../interfaces';
+import type { ListError, Status } from '../../interfaces';
 import { CollectionItem } from '../CollectionItem/CollectionItem';
 import Pagination from '../UI/Pagination/Pagination';
 import styles from './index.module.css';
+import type { FC, Dispatch, SetStateAction } from 'react';
 
 interface Props {
   status: Status;
-  error: string | null;
-  setIsVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  error: ListError;
+  setIsVisible: Dispatch<SetStateAction<boolean>>;
 }
 
-const AllCollectionsSection: React.FC<Props> = ({ status, error, setIsVisible }) => {
+const AllCollectionsSection: FC<Props> = ({ status, error, setIsVisible }) => {
   const { collections } = useCollections();
 
   return (

@@ -1,20 +1,23 @@
 import { useSearchParams } from 'react-router-dom';
 import styles from './index.module.css';
 import type { ISpecialization } from '../../../interfaces';
+import { useMemo, type FC } from 'react';
 
 interface Props {
   specialization: ISpecialization;
 }
 
-const SpecializationAside: React.FC<Props> = ({ specialization }) => {
+const SpecializationAside: FC<Props> = ({ specialization }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const specs = searchParams.get('specializations');
-  const arrSpecs = specs ? specs.split(',').map((item) => Number(item)) : [];
+
+  const arrSpecs = useMemo(
+    () => (specs ? specs.split(',').map((item) => Number(item)) : []),
+    [specs],
+  );
 
   const changeSpec = (spec: number) => {
     const next = new URLSearchParams(searchParams);
-
-    const arrSpecs = specs ? specs.split(',').map((item) => Number(item)) : [];
 
     const newSpecs = arrSpecs.includes(spec)
       ? arrSpecs.filter((s) => s !== spec)
@@ -26,17 +29,11 @@ const SpecializationAside: React.FC<Props> = ({ specialization }) => {
     setSearchParams(next);
   };
 
-  const handleClick = (id: number) => {
-    changeSpec(id);
-  };
-
   return (
     <div>
       <button
-        onClick={() => handleClick(Number(specialization.id))}
-        className={
-          arrSpecs.includes(Number(specialization.id)) ? styles.activeButton : styles.button
-        }>
+        onClick={() => changeSpec(specialization.id)}
+        className={arrSpecs.includes(specialization.id) ? styles.activeButton : styles.button}>
         {specialization.title}
       </button>
     </div>

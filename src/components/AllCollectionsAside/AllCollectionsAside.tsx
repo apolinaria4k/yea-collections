@@ -4,16 +4,17 @@ import ButtonClose from '../UI/ButtonClose/ButtonClose';
 import MyInput from '../UI/MyInput/MyInput';
 import styles from './index.module.css';
 import AccessBlock from '../AccessBlock/AccessBlock';
+import type { FC, Dispatch, SetStateAction } from 'react';
 
 interface Props {
   totalSpecs: number;
   specializations: ISpecialization[];
-  setSpecializations: React.Dispatch<React.SetStateAction<ISpecialization[]>>;
+  setSpecializations: Dispatch<React.SetStateAction<ISpecialization[]>>;
   isVisible: boolean;
-  setIsVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsVisible: Dispatch<SetStateAction<boolean>>;
 }
 
-const AllCollectionsAside: React.FC<Props> = ({
+const AllCollectionsAside: FC<Props> = ({
   totalSpecs,
   specializations,
   setSpecializations,

@@ -11,9 +11,9 @@ interface Props {
   shortAnswer: string;
 }
 
-const AnswerInItem: React.FC<Props> = ({ id, rate, complexity, shortAnswer }) => {
+const AnswerInItem: FC<Props> = ({ id, rate, complexity, shortAnswer }) => {
   const location = useLocation();
-  const { collectionId } = useParams();
+  const { collectionId } = useParams<{ collectionId: string }>();
   return (
     <div className={styles.wrapper}>
       <div className={styles.wrapperCharacter}>

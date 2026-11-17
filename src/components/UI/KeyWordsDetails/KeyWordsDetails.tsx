@@ -1,12 +1,13 @@
 import MyTitle from '../MyTitle/MyTitle';
 import KeyWordDetails from '../KeyWordDetails/KeyWordDetails';
 import styles from './index.module.css';
+import type { FC } from 'react';
 
 interface Props {
   keywords: string[];
 }
 
-const KeyWordsDetails: React.FC<Props> = ({ keywords }) => {
+const KeyWordsDetails: FC<Props> = ({ keywords }) => {
   return (
     <div>
       <MyTitle title="Ключевые слова" />

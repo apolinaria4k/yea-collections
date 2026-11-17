@@ -1,12 +1,13 @@
 import styles from '../AllCollectionsAside/index.module.css';
 import MyTitle from '../UI/MyTitle/MyTitle';
+import type { FC } from 'react';
 
 interface Props {
   title: string;
   isFree: boolean;
 }
 
-const PublicAccessBlock: React.FC<Props> = ({ title, isFree }) => {
+const PublicAccessBlock: FC<Props> = ({ title, isFree }) => {
   return (
     <>
       <div>

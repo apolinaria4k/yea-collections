@@ -1,13 +1,14 @@
 import MyTitle from '../MyTitle/MyTitle';
 import Characteristic from '../Сharacteristic/Characteristic';
 import classes from './index.module.css';
+import type { FC } from 'react';
 
 interface Props {
   complexity: number;
   rate: number;
 }
 
-const Levels: React.FC<Props> = ({ complexity, rate }) => {
+const Levels: FC<Props> = ({ complexity, rate }) => {
   return (
     <div>
       <MyTitle title="Уровень:" />

@@ -2,13 +2,14 @@ import type { ICollection } from '../../interfaces';
 import Title from '../UI/Title/Title';
 import styles from './index.module.css';
 import Description from '../UI/Description/Description';
+import type { FC, Dispatch, SetStateAction } from 'react';
 
 interface Props {
   collection: ICollection | undefined;
-  setIsVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsVisible: Dispatch<SetStateAction<boolean>>;
 }
 
-export const PublicCollectionItem: React.FC<Props> = ({ collection, setIsVisible }) => {
+export const PublicCollectionItem: FC<Props> = ({ collection, setIsVisible }) => {
   if (!collection) return <h1>Загрузка...</h1>;
   return (
     <div className={styles.item}>

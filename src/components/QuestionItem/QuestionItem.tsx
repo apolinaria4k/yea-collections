@@ -3,12 +3,13 @@ import type { IQuestion } from '../../interfaces';
 import ButtonArrowDown from '../UI/ButtonArrowDown/ButtonArrowDown';
 import styles from './index.module.css';
 import AnswerInItem from '../AnswerInItem/AnswerInItem';
+import type { FC } from 'react';
 
 interface Props {
   question: IQuestion;
 }
 
-const QuestionItem: React.FC<Props> = ({ question }) => {
+const QuestionItem: FC<Props> = ({ question }) => {
   const [isVisible, setIsVisible] = useState(false);
 
   const handleClick = () => {

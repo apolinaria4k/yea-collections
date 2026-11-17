@@ -1,10 +1,11 @@
 import styles from './index.module.css';
+import type { FC } from 'react';
 
 interface Props {
   description: string;
 }
 
-const Description: React.FC<Props> = ({ description }) => {
+const Description: FC<Props> = ({ description }) => {
   return <p className={styles.description}>{description}</p>;
 };
 

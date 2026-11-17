@@ -5,14 +5,15 @@ import Keywords from '../UI/Keywords/Keywords';
 import Levels from '../UI/Levels/Levels';
 import Skills from '../UI/Skills/Skills';
 import styles from './index.module.css';
+import type { FC, Dispatch, SetStateAction } from 'react';
 
 interface Props {
   question: IQuestion;
   isVisible: boolean;
-  setIsVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsVisible: Dispatch<SetStateAction<boolean>>;
 }
 
-const OneQuestionDetailsAside: React.FC<Props> = ({ question, isVisible, setIsVisible }) => {
+const OneQuestionDetailsAside: FC<Props> = ({ question, isVisible, setIsVisible }) => {
   return (
     <aside className={styles.aside}>
       <div className={`${styles.blockWrapper} ${styles.filters} ${isVisible ? styles.active : ''}`}>

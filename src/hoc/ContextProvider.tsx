@@ -1,12 +1,13 @@
-import { useState, type ReactElement } from 'react';
+import { useState } from 'react';
 import { CollectionsContext } from '../context';
+import type { FC, ReactNode } from 'react';
 import type { ICollection, IQuestion, ListError, Status } from '../interfaces';
 
 interface Props {
-  children: ReactElement;
+  children: ReactNode;
 }
 
-const ContextProvider: React.FC<Props> = ({ children }) => {
+const ContextProvider: FC<Props> = ({ children }) => {
   const [collections, setCollections] = useState<ICollection[]>([]);
   const [questions, setQuestions] = useState<IQuestion[]>([]);
   const [totalPages, setTotalPages] = useState<number>(0);

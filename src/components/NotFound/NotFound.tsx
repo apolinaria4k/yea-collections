@@ -10,7 +10,7 @@ export default function NotFound() {
           <p>Такая страница не найдена</p>
         </div>
         <Link to={{ pathname: `/`, search: location.search }} className={styles.link}>
-          К списку вопросов
+          К списку коллекций
         </Link>
       </div>
     </div>

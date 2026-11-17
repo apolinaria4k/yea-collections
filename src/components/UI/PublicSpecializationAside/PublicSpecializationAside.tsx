@@ -1,11 +1,12 @@
 import type { ISpecialization } from '../../../interfaces';
 import styles from './index.module.css';
+import type { FC } from 'react';
 
 interface Props {
   specialization: ISpecialization;
 }
 
-const PublicSpecializationAside: React.FC<Props> = ({ specialization }) => {
+const PublicSpecializationAside: FC<Props> = ({ specialization }) => {
   return (
     <div>
       <button className={styles.button}>{specialization.title}</button>

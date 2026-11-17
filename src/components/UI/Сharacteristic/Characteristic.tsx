@@ -1,10 +1,11 @@
 import classes from './index.module.css';
+import type { FC } from 'react';
 
 interface Props {
   title: string;
   value: number;
 }
-const Characteristic: React.FC<Props> = ({ title, value }) => {
+const Characteristic: FC<Props> = ({ title, value }) => {
   return (
     <div className={classes.wrapper}>
       <p className={classes.text}>

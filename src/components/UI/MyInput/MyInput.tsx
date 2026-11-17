@@ -1,11 +1,12 @@
 import { useSearchParams } from 'react-router-dom';
 import styles from './index.module.css';
+import type { FC, ChangeEvent } from 'react';
 
-const MyInput: React.FC = () => {
+const MyInput: FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const value = searchParams.get('value') || '';
 
-  const changeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const changeValue = (e: ChangeEvent<HTMLInputElement>) => {
     const next = new URLSearchParams(searchParams);
     next.set('value', e.target.value);
     next.set('page', String(1));

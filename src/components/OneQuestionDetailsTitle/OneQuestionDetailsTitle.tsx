@@ -1,12 +1,13 @@
 import styles from './index.module.css';
+import type { FC, Dispatch, SetStateAction } from 'react';
 
 interface Props {
   title: string;
   description: string;
-  setIsVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsVisible: Dispatch<SetStateAction<boolean>>;
 }
 
-const OneQuestionDetailsTitle: React.FC<Props> = ({ title, description, setIsVisible }) => {
+const OneQuestionDetailsTitle: FC<Props> = ({ title, description, setIsVisible }) => {
   return (
     <div className={styles.questionWrapper}>
       <div className={styles.imgWrapper}>

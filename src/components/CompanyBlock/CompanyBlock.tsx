@@ -6,7 +6,7 @@ interface Props {
   company: string;
 }
 
-const CompanyBlock: React.FC<Props> = ({ title, company }) => {
+const CompanyBlock: FC<Props> = ({ title, company }) => {
   return (
     <>
       <div>
