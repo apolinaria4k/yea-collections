@@ -1,13 +1,13 @@
 import axios from 'axios';
 import { useRef, useState } from 'react';
 import { getErrorMessage } from '../utils/getErrorMessage';
-import type { Status } from '../interfaces';
+import type { ListError, Status } from '../interfaces';
 
 export const useFetching = <T extends unknown[]>(callback: (...args: [...T]) => Promise<void>) => {
   const controlledRef = useRef<AbortController | null>(null);
   const requestIdRef = useRef(0);
   const [status, setStatus] = useState<Status>('idle');
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<ListError>(null);
 
   const fetching = async (...args: T) => {
     const myId = ++requestIdRef.current;

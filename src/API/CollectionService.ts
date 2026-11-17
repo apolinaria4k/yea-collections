@@ -1,10 +1,17 @@
 import axios from 'axios';
-import type { ICollection, IColResponse, IQueResponse, ISpecResponse } from '../interfaces';
+import type {
+  ICollection,
+  IColResponse,
+  IQueResponse,
+  IQuestion,
+  ISpecResponse,
+} from '../interfaces';
 
 const COLLECTIONS_URL = import.meta.env.VITE_COLLECTIONS_API_URL;
 const QUESTIONS_URL = import.meta.env.VITE_QUESTIONS_API_URL;
 const SPECIALIZATIONS_URL = import.meta.env.VITE_SPECIALIZATIONS_API_URL;
 const COLLECTION_BY_ID = import.meta.env.VITE_COLLECTION_BY_ID_API_URL;
+const QUESTION_BY_ID_URL = import.meta.env.VITE_QUESTION_BY_ID_API_URL;
 
 export default class CollectionService {
   static async getAllCollections(
@@ -26,20 +33,10 @@ export default class CollectionService {
     return response;
   }
 
-  static async getAllQuestions(
-    page: number = 1,
-    collection: number,
-    // title,
-    // specializationId,
-    // skills,
-    // complexity,
-    // rate,
-  ) {
+  static async getAllQuestions(page: number = 1, collection: number) {
     const params = {
       page,
       collection,
-      // title,
-      // specializationId,
     };
 
     const response = await axios.get<IQueResponse>(QUESTIONS_URL, {
@@ -60,6 +57,12 @@ export default class CollectionService {
 
   static async getCollectionById(collectionId: number) {
     const response = await axios.get<ICollection>(`${COLLECTION_BY_ID}${collectionId}/public`);
+    return response;
+  }
+
+  static async getQuestionById(id: number) {
+    const response = await axios.get<IQuestion>(`${QUESTION_BY_ID_URL}${id}`);
+
     return response;
   }
 }

@@ -1,4 +1,5 @@
-import type { ICollection, IQuestion, Status } from '../../interfaces';
+import useCollections from '../../hooks/useCollections';
+import type { ICollection, Status } from '../../interfaces';
 import OneCollectionQuestionsBlock from '../OneCollectionQuestionsBlock/OneCollectionQuestionsBlock';
 import { PublicCollectionItem } from '../PublicCollectionItem/PublicCollectionItem';
 import Pagination from '../UI/Pagination/Pagination';
@@ -8,17 +9,11 @@ interface Props {
   collection: ICollection | undefined;
   status: Status;
   error: string | null;
-  questions: IQuestion[];
   setIsVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const PublicCollectionsSection: React.FC<Props> = ({
-  collection,
-  setIsVisible,
-  status,
-  error,
-  questions,
-}) => {
+const PublicCollectionsSection: React.FC<Props> = ({ collection, setIsVisible, status, error }) => {
+  const { questions } = useCollections();
   return (
     <>
       <section className={styles.section}>
@@ -39,7 +34,7 @@ const PublicCollectionsSection: React.FC<Props> = ({
             <h2 className={styles.title}>Вопросы для данной коллекции скоро появятся</h2>
           ) : (
             <>
-              <OneCollectionQuestionsBlock questions={questions} />
+              <OneCollectionQuestionsBlock />
               <Pagination />
             </>
           )}

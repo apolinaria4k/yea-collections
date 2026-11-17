@@ -1,5 +1,5 @@
 import parse from 'html-react-parser';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import Characteristic from '../UI/Сharacteristic/Characteristic';
 import styles from './index.module.css';
 import { sanitizeHtml } from '../../utils/sanitizeHtml';
@@ -13,6 +13,7 @@ interface Props {
 
 const AnswerInItem: React.FC<Props> = ({ id, rate, complexity, shortAnswer }) => {
   const location = useLocation();
+  const { collectionId } = useParams();
   return (
     <div className={styles.wrapper}>
       <div className={styles.wrapperCharacter}>
@@ -22,7 +23,7 @@ const AnswerInItem: React.FC<Props> = ({ id, rate, complexity, shortAnswer }) =>
       <div className={styles.textOfAnswer}>{parse(sanitizeHtml(shortAnswer))}</div>
       <div className={styles.linkWrapper}>
         <Link
-          to={{ pathname: `/questions/${id}`, search: location.search }}
+          to={{ pathname: `/collections/${collectionId}/questions/${id}`, search: location.search }}
           className={styles.link}>
           Подробнее
         </Link>

@@ -1,0 +1,54 @@
+.questionWrapper {
+  display: flex;
+  gap: 10px;
+}
+
+.title {
+  padding-top: 5px;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 120%;
+  margin-bottom: 8px;
+  color: #303030;
+}
+
+.text {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 130%;
+  color: #474747;
+}
+
+.svgButton {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .svgWrapper {
+    display: flex;
+  }
+  .svgButton {
+    display: flex;
+  }
+}
+
+@media (max-width: 360px) {
+  .questionWrapper {
+    flex-direction: column;
+  }
+  .title {
+    font-size: 20px;
+    padding-top: 0;
+  }
+
+  .imgWrapper {
+    display: flex;
+    justify-content: center;
+  }
+
+  .image {
+    border-radius: 8px;
+    width: 320px;
+    height: 320px;
+  }
+}

@@ -47,6 +47,7 @@ export interface IQuestion {
   shortAnswer: string;
   questionSkills: ISkill[];
   questionSpecializations: ISpecialization[];
+  description: string;
 }
 
 export interface IAccess {
@@ -66,10 +67,21 @@ export interface ISkill {
 }
 
 export type Status = 'idle' | 'loading' | 'success' | 'error';
+export type ListError = string | null;
 
 export interface ICollectionsContextValue {
   collections: ICollection[];
   setCollections: React.Dispatch<React.SetStateAction<ICollection[]>>;
   totalPages: number;
   setTotalPages: React.Dispatch<React.SetStateAction<number>>;
+  questions: IQuestion[];
+  setQuestions: React.Dispatch<React.SetStateAction<IQuestion[]>>;
+  loadedPage: number;
+  setLoadedPage: React.Dispatch<React.SetStateAction<number>>;
+  listStatus: Status;
+  setListStatus: React.Dispatch<React.SetStateAction<Status>>;
+  listError: ListError;
+  setListError: React.Dispatch<React.SetStateAction<ListError>>;
+  retryTick: number;
+  setRetryTick: React.Dispatch<React.SetStateAction<number>>;
 }

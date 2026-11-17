@@ -1,7 +1,7 @@
 import type { ISpecialization } from '../../interfaces';
 import styles from '../AllCollectionsAside/index.module.css';
 import MyTitle from '../UI/MyTitle/MyTitle';
-import SpecializationAside from '../UI/SpecializationAside/SpecializationAside';
+import PublicSpecializationAside from '../UI/PublicSpecializationAside/PublicSpecializationAside';
 
 interface Props {
   specializations: ISpecialization[];
@@ -15,7 +15,7 @@ const PublicSpecializationsBlock: React.FC<Props> = ({ title, specializations })
         <MyTitle title={title} />
         <div className={styles.variants}>
           {specializations.map((item) => (
-            <SpecializationAside key={item.id} specialization={item} />
+            <PublicSpecializationAside key={item.id} specialization={item} />
           ))}
         </div>
       </div>

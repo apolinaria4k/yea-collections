@@ -28,7 +28,6 @@ const SpecializationAside: React.FC<Props> = ({ specialization }) => {
 
   const handleClick = (id: number) => {
     changeSpec(id);
-    console.log(id);
   };
 
   return (
