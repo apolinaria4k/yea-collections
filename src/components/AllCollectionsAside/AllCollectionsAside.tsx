@@ -32,7 +32,7 @@ const AllCollectionsAside: FC<Props> = ({
         <ButtonClose setIsVisible={setIsVisible}></ButtonClose>
 
         <div className={styles.innerWrapper}>
-          <MyInput></MyInput>
+          <MyInput />
 
           <SpecializationsBlock
             title="Специализация"

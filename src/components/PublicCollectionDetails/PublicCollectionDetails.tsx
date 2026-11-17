@@ -11,6 +11,7 @@ import PublicCollectionsAside from '../PublicCollectionsAside/PublicCollectionsA
 import type { FC } from 'react';
 import PublicCollectionsSection from '../PublicCollectionsSection/PublicCollectionsSection';
 import styles from './index.module.css';
+import OneCollectionSkeleton from '../OneCollectionSkeleton/OneCollectionSkeleton';
 
 export const PublicCollectionDetails: FC = () => {
   const { collectionId } = useParams<{ collectionId: string }>();
@@ -46,36 +47,31 @@ export const PublicCollectionDetails: FC = () => {
     <>
       <main className={styles.main}>
         <div className={styles.wrapperMain}>
-          {!collection ? (
-            <h1>Загрузка...</h1>
-          ) : (
-            <>
-              {status === 'idle' || status === 'loading' ? (
-                // <Skeleton />
-                <h1>Загрузка...</h1>
-              ) : status === 'error' ? (
-                <h2 className={styles.title}>{error}</h2>
-              ) : !questions ? (
-                <h1>Загрузка...</h1>
-              ) : !collection.isFree ? (
-                <ForMembers />
-              ) : collection.isFree && !questions.length ? (
-                <ForAllWithoutQuestions />
-              ) : (
-                <PublicCollectionsSection
-                  collection={collection}
-                  status={status}
-                  error={error}
-                  setIsVisible={setIsVisible}
-                />
-              )}
-              <PublicCollectionsAside
+          <>
+            {status === 'idle' || status === 'loading' ? (
+              <OneCollectionSkeleton count={10} />
+            ) : status === 'error' ? (
+              <h2 className={styles.title}>{error}</h2>
+            ) : !questions ? (
+              <OneCollectionSkeleton count={10} />
+            ) : !collection!.isFree ? (
+              <ForMembers />
+            ) : collection!.isFree && !questions.length ? (
+              <ForAllWithoutQuestions />
+            ) : (
+              <PublicCollectionsSection
                 collection={collection}
-                isVisible={isVisible}
+                status={status}
+                error={error}
                 setIsVisible={setIsVisible}
               />
-            </>
-          )}
+            )}
+            <PublicCollectionsAside
+              collection={collection}
+              isVisible={isVisible}
+              setIsVisible={setIsVisible}
+            />
+          </>
         </div>
       </main>
     </>

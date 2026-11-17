@@ -1,5 +1,6 @@
 import useCollections from '../../hooks/useCollections';
 import type { ListError, Status } from '../../interfaces';
+import AllCollectionsSkeleton from '../AllCollectionsSkeleton/AllCollectionsSkeleton';
 import { CollectionItem } from '../CollectionItem/CollectionItem';
 import Pagination from '../UI/Pagination/Pagination';
 import styles from './index.module.css';
@@ -39,8 +40,7 @@ const AllCollectionsSection: FC<Props> = ({ status, error, setIsVisible }) => {
         </div>
 
         {status === 'idle' || status === 'loading' ? (
-          // <Skeleton />
-          <h1>Загрузка...</h1>
+          <AllCollectionsSkeleton count={10} />
         ) : status === 'error' ? (
           <h2 className={styles.title}>{error}</h2>
         ) : !collections.length ? (

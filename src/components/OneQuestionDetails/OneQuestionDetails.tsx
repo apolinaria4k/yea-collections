@@ -10,6 +10,7 @@ import { getTotalPages } from '../../utils/getTotalPages';
 import styles from './index.module.css';
 import NotFound from '../NotFound/NotFound';
 import type { FC, ReactNode } from 'react';
+import OneQuestionSkeleton from '../OneQuestionSkeleton/OneQuestionSkeleton';
 const OneQuestionDetails: FC = () => {
   const location = useLocation();
   const { setQuestions, setLoadedPage, setTotalPages, setListStatus, setListError, retryTick } =
@@ -50,7 +51,7 @@ const OneQuestionDetails: FC = () => {
   let content: ReactNode;
 
   if (questionsStatus === 'idle' || questionsStatus === 'loading') {
-    content = <h1>Загрузка</h1>;
+    content = <OneQuestionSkeleton />;
   } else if (questionsStatus === 'error') {
     content = <h1>Вопрос не найден</h1>;
   } else if (!questionData) {

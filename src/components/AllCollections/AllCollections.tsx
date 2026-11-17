@@ -12,11 +12,11 @@ import AllCollectionsSection from '../AllCollectionsSection/AllCollectionsSectio
 import styles from './index.module.css';
 
 export const AllCollections: FC = () => {
-  const { collections, setCollections, setTotalPages } = useCollections();
+  const { setCollections, setTotalPages } = useCollections();
   const [specs, setSpecs] = useState<ISpecialization[]>([]);
   const [totalSpecs, setTotalSpecs] = useState<number>(5);
   const [isVisible, setIsVisible] = useState<boolean>(false);
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
 
   const page = Number(searchParams.get('page')) || 1;
   const specializations = searchParams.get('specializations') || '';
@@ -39,7 +39,6 @@ export const AllCollections: FC = () => {
         isFree,
       );
       setCollections(response.data.data);
-      // console.log(response.data);
       const totalCount = response.data.total;
       setTotalPages(getTotalPages(totalCount));
     },
