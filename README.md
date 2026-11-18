@@ -1,75 +1,41 @@
-# React + TypeScript + Vite
+# YeaHub Collections
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Учебный проект — клиент для работы с публичной базой коллекций вопросов YeaHub.
+Список коллекций с фильтрами и пагинацией, страница детального просмотра вопроса внутри коллекции, навигация по вопросам (следующий/предыдущий).
 
-Currently, two official plugins are available:
+## Стек
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- React
+- React Router
+- Axios
+- Vite
+- CSS Modules
 
-## React Compiler
+## Запуск проекта
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+1. Установить зависимости:
 
-## Expanding the ESLint configuration
+   ```bash
+   npm install
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+   ```
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+2. Создать файл .env на основе образца:
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+   ```cmd
+   copy .env.example .env
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+   ```
 
-```
+3. Запустить dev-сервер:
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+   ```bash
+   npm run dev
+   ```
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Важно
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
-```
+Проект работает только при наличии корректных URL в переменных окружения (файл .env).
+Если URL API указаны неверно или отсутствуют — запросы к серверу будут завершаться ошибкой,
+и приложение не сможет загрузить коллекции и вопросы.
+Проверьте содержимое .env (например, VITE_API_URL или аналогичные переменные) перед запуском.
