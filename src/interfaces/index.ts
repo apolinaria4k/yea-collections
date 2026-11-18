@@ -70,6 +70,10 @@ export interface ISkill {
 
 export type Status = 'idle' | 'loading' | 'success' | 'error';
 export type ListError = string | null;
+export type PendingTarget = {
+  targetPage: number;
+  position: 'first' | 'last';
+};
 
 export interface ICollectionsContextValue {
   collections: ICollection[];

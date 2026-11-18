@@ -1,4 +1,3 @@
-import { useRef, useState } from 'react';
 import { useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import useCollections from '../../hooks/useCollections';
 import styles from './index.module.css';
@@ -6,89 +5,74 @@ import type { FC } from 'react';
 
 const NextPreviousButtons: FC = () => {
   const location = useLocation();
-  const { questions, totalPages, setRetryTick } = useCollections();
+  const { questions, totalPages } = useCollections();
   const { questionId, collectionId } = useParams<{ questionId: string; collectionId: string }>();
   const [searchParams, setSearchParams] = useSearchParams();
   const page = Number(searchParams.get('page')) || 1;
   const navigate = useNavigate();
-  const pendingRef = useRef<number | null>(null);
-  const [failedTarget, setFailedTarget] = useState<number | null>(null);
 
-  const changePage = (page: number) => {
-    const next = new URLSearchParams(searchParams);
-    next.set('page', String(page));
-    setSearchParams(next);
+  const currentIndex = questions.findIndex((q) => q.id === Number(questionId));
+
+  const isPrevDisabled = questions.length === 0 || (currentIndex === 0 && page <= 1);
+  const isNextDisabled =
+    questions.length === 0 || (currentIndex === questions.length - 1 && page >= totalPages);
+
+  const goToQuestion = (id: number) => {
+    navigate({
+      pathname: `/collections/${collectionId}/questions/${id}`,
+      search: location.search,
+    });
   };
 
   const handlePrevClick = () => {
-    setFailedTarget(null);
-    if (pendingRef.current !== null) return;
     if (!questions.length) return;
-    const currentIndex = questions.findIndex((q) => q.id === Number(questionId));
+    if (currentIndex === 0 && page <= 1) return;
+
     if (currentIndex === -1) {
-      navigate({
-        pathname: `/collections/${collectionId}/questions/${questions[questions.length - 1].id}`,
-        search: location.search,
-      });
+      goToQuestion(questions[questions.length - 1].id);
     } else if (currentIndex > 0) {
-      navigate({
-        pathname: `/collections/${collectionId}/questions/${questions[currentIndex - 1].id}`,
-        search: location.search,
-      });
+      goToQuestion(questions[currentIndex - 1].id);
     } else if (currentIndex === 0) {
       const targetPage = page > 1 ? page - 1 : totalPages;
-      changePage(targetPage);
+      const next = new URLSearchParams(searchParams);
+      next.set('page', String(targetPage));
+      next.set('target', 'last');
+      setSearchParams(next);
     }
   };
 
   const handleNextClick = () => {
-    setFailedTarget(null);
-    if (pendingRef.current !== null) return;
     if (!questions.length) return;
-    const currentIndex = questions.findIndex((q) => q.id === Number(questionId));
+    if (currentIndex === questions.length - 1 && page >= totalPages) return;
+
     if (currentIndex === -1) {
-      navigate({
-        pathname: `/collections/${collectionId}/questions/${questions[0].id}`,
-        search: location.search,
-      });
+      goToQuestion(questions[0].id);
     } else if (currentIndex < questions.length - 1) {
-      navigate({
-        pathname: `/collections/${collectionId}/questions/${questions[currentIndex + 1].id}`,
-        search: location.search,
-      });
+      goToQuestion(questions[currentIndex + 1].id);
     } else if (currentIndex === questions.length - 1) {
       const targetPage = page < totalPages ? page + 1 : 1;
-      changePage(targetPage);
+      const next = new URLSearchParams(searchParams);
+      next.set('page', String(targetPage));
+      next.set('target', 'first');
+      setSearchParams(next);
     }
   };
 
-  const handleRepeat = () => {
-    if (!failedTarget) return;
-
-    pendingRef.current = failedTarget;
-    setFailedTarget(null);
-    setRetryTick((t) => t + 1);
-  };
-
   return (
-    <>
-      {failedTarget && (
-        <div>
-          <p>Не удалось загрузить вопрос</p>
-          <button className={styles.repeatButton} onClick={handleRepeat}>
-            Повторить
-          </button>
-        </div>
-      )}
-      <div className={styles.linksWrapper}>
-        <button onClick={handlePrevClick} className={`${styles.linkPrev} ${styles.link}`}>
-          Предыдущий
-        </button>
-        <button onClick={handleNextClick} className={`${styles.linkNext} ${styles.link}`}>
-          Следующий
-        </button>
-      </div>
-    </>
+    <div className={styles.linksWrapper}>
+      <button
+        onClick={handlePrevClick}
+        disabled={isPrevDisabled}
+        className={`${styles.linkPrev} ${styles.link}`}>
+        Предыдущий
+      </button>
+      <button
+        onClick={handleNextClick}
+        disabled={isNextDisabled}
+        className={`${styles.linkNext} ${styles.link}`}>
+        Следующий
+      </button>
+    </div>
   );
 };
 

@@ -10,9 +10,6 @@
   line-height: 110%;
   color: #303030;
   position: relative;
-}
-
-.link:hover {
   cursor: pointer;
 }
 
@@ -22,6 +19,11 @@
 
 .linkNext {
   padding-right: 24px;
+}
+
+.link:disabled {
+  color: #757575;
+  cursor: default;
 }
 
 .linkPrev::before {

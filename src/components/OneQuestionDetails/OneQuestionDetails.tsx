@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, useLocation, useParams, useSearchParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import OneQuestionDetailsAside from '../OneQuestionDetailsAside/OneQuestionDetailsAside';
 import OneQuestionDetailsSection from '../OneQuestionDetailsSection/OneQuestionDetailsSection';
 import CollectionService from '../../API/CollectionService';
@@ -11,27 +11,45 @@ import styles from './index.module.css';
 import NotFound from '../NotFound/NotFound';
 import type { FC, ReactNode } from 'react';
 import OneQuestionSkeleton from '../OneQuestionSkeleton/OneQuestionSkeleton';
+
 const OneQuestionDetails: FC = () => {
   const location = useLocation();
-  const { setQuestions, setLoadedPage, setTotalPages, setListStatus, setListError, retryTick } =
-    useCollections();
+  const navigate = useNavigate();
+  const {
+    setQuestions,
+    questions,
+    setLoadedPage,
+    setTotalPages,
+    setListStatus,
+    setListError,
+    loadedPage,
+    retryTick,
+  } = useCollections();
   const { questionId, collectionId } = useParams<{ questionId: string; collectionId: string }>();
   const [questionData, setQuestionData] = useState<IQuestion>();
   const [isVisible, setIsVisible] = useState(false);
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const page = Number(searchParams.get('page')) || 1;
+  const target = searchParams.get('target');
+
+  const isListStale = loadedPage !== page;
+  const isQuestionInList = questions.some((q) => q.id === Number(questionId));
 
   const [fetchAllQuestions, questionsStatus, questionsError] = useFetching(
-    async (page: number, collectionId: number) => {
-      const response = await CollectionService.getAllQuestions(page, collectionId);
+    async (signal, page, collectionId) => {
+      const response = await CollectionService.getAllQuestions(
+        Number(page),
+        Number(collectionId),
+        signal,
+      );
       setQuestions(response.data.data);
-      const totalCount = response.data.total;
-      setTotalPages(getTotalPages(totalCount));
+      setLoadedPage(Number(page));
+      setTotalPages(getTotalPages(response.data.total));
     },
   );
 
-  const [fetchQuestionData] = useFetching(async (questionId: number) => {
-    const response = await CollectionService.getQuestionById(Number(questionId));
+  const [fetchQuestionData, questionStatus] = useFetching(async (signal, questionId) => {
+    const response = await CollectionService.getQuestionById(Number(questionId), signal);
     setQuestionData(response.data);
   });
 
@@ -41,21 +59,48 @@ const OneQuestionDetails: FC = () => {
   }, [questionsStatus, questionsError]);
 
   useEffect(() => {
+    if (!collectionId) return;
     fetchAllQuestions(page, Number(collectionId));
-  }, [page, retryTick]);
+  }, [page, retryTick, collectionId]);
 
   useEffect(() => {
+    if (!questionId) return;
     fetchQuestionData(Number(questionId));
   }, [questionId]);
 
+  useEffect(() => {
+    if (!target) return;
+    if (questionsStatus !== 'success' || isListStale) return;
+    if (!questions.length) return;
+
+    const id = target === 'first' ? questions[0].id : questions[questions.length - 1].id;
+
+    const next = new URLSearchParams(searchParams);
+    next.delete('target');
+
+    navigate(
+      { pathname: `/collections/${collectionId}/questions/${id}`, search: next.toString() },
+      { replace: true },
+    );
+  }, [target, questionsStatus, questions, isListStale, collectionId, navigate, searchParams]);
+
   let content: ReactNode;
 
-  if (questionsStatus === 'idle' || questionsStatus === 'loading') {
+  if (
+    questionsStatus === 'idle' ||
+    questionsStatus === 'loading' ||
+    isListStale ||
+    questionStatus === 'loading'
+  ) {
     content = <OneQuestionSkeleton />;
   } else if (questionsStatus === 'error') {
-    content = <h1>Вопрос не найден</h1>;
-  } else if (!questionData) {
     content = <NotFound />;
+  } else if (!questionData || questionData.id !== Number(questionId) || !isQuestionInList) {
+    if (target) {
+      content = <OneQuestionSkeleton />;
+    } else {
+      content = <NotFound />;
+    }
   } else {
     content = (
       <>

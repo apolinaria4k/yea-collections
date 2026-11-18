@@ -21,14 +21,14 @@ export const PublicCollectionDetails: FC = () => {
   const [searchParams] = useSearchParams();
   const page = Number(searchParams.get('page')) || 1;
 
-  const [fetchCollection] = useFetching(async (collectionId: number) => {
-    const response = await CollectionService.getCollectionById(Number(collectionId));
+  const [fetchCollection] = useFetching(async (signal: AbortSignal, collectionId: number) => {
+    const response = await CollectionService.getCollectionById(Number(collectionId), signal);
     setCollection(response.data);
   });
 
   const [fetchAllQuestions, status, error] = useFetching(
-    async (page: number, collectionId: number) => {
-      const response = await CollectionService.getAllQuestions(page, collectionId);
+    async (signal: AbortSignal, page: number, collectionId: number) => {
+      const response = await CollectionService.getAllQuestions(page, collectionId, signal);
       setQuestions(response.data.data);
       const totalCount = response.data.total;
       setTotalPages(getTotalPages(totalCount));
