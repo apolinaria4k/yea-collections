@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import OneQuestionDetailsAside from '../OneQuestionDetailsAside/OneQuestionDetailsAside';
 import OneQuestionDetailsSection from '../OneQuestionDetailsSection/OneQuestionDetailsSection';
@@ -15,16 +15,8 @@ import OneQuestionSkeleton from '../OneQuestionSkeleton/OneQuestionSkeleton';
 const OneQuestionDetails: FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const {
-    setQuestions,
-    questions,
-    setLoadedPage,
-    setTotalPages,
-    setListStatus,
-    setListError,
-    loadedPage,
-    retryTick,
-  } = useCollections();
+  const { setQuestionsPage, setQuestionsStatus, setQuestionsError, questionsPage } =
+    useCollections();
   const { questionId, collectionId } = useParams<{ questionId: string; collectionId: string }>();
   const [questionData, setQuestionData] = useState<IQuestion>();
   const [isVisible, setIsVisible] = useState(false);
@@ -32,36 +24,53 @@ const OneQuestionDetails: FC = () => {
   const page = Number(searchParams.get('page')) || 1;
   const target = searchParams.get('target');
 
-  const isListStale = loadedPage !== page;
-  const isQuestionInList = questions.some((q) => q.id === Number(questionId));
+  const routeRef = useRef({ collectionId: Number(collectionId), page });
+  useEffect(() => {
+    routeRef.current = { collectionId: Number(collectionId), page };
+  }, [collectionId, page]);
+
+  const isListCurrent =
+    questionsPage !== null &&
+    questionsPage.collectionId === Number(collectionId) &&
+    questionsPage.page === page;
+  const questions = isListCurrent ? questionsPage!.data : [];
+  const isListStale = !isListCurrent;
 
   const [fetchAllQuestions, questionsStatus, questionsError] = useFetching(
-    async (signal, page, collectionId) => {
-      const response = await CollectionService.getAllQuestions(
-        Number(page),
-        Number(collectionId),
-        signal,
-      );
-      setQuestions(response.data.data);
-      setLoadedPage(Number(page));
-      setTotalPages(getTotalPages(response.data.total));
+    async (signal: AbortSignal, page: number, collectionId: number) => {
+      if (!Number.isFinite(collectionId)) return;
+      const response = await CollectionService.getAllQuestions(page, collectionId, signal);
+      if (signal.aborted) return;
+
+      const current = routeRef.current;
+      if (current.collectionId !== collectionId || current.page !== page) return;
+
+      setQuestionsPage({
+        collectionId,
+        page,
+        data: response.data.data,
+        totalPages: getTotalPages(response.data.total, response.data.limit),
+      });
     },
   );
 
-  const [fetchQuestionData, questionStatus] = useFetching(async (signal, questionId) => {
-    const response = await CollectionService.getQuestionById(Number(questionId), signal);
-    setQuestionData(response.data);
-  });
+  const [fetchQuestionData, questionStatus] = useFetching(
+    async (signal: AbortSignal, id: number) => {
+      const response = await CollectionService.getQuestionById(id, signal);
+      if (signal.aborted) return;
+      setQuestionData(response.data);
+    },
+  );
 
   useEffect(() => {
-    setListStatus(questionsStatus);
-    setListError(questionsError);
-  }, [questionsStatus, questionsError]);
+    setQuestionsStatus(questionsStatus);
+    setQuestionsError(questionsError);
+  }, [questionsStatus, questionsError, setQuestionsStatus, setQuestionsError]);
 
   useEffect(() => {
     if (!collectionId) return;
     fetchAllQuestions(page, Number(collectionId));
-  }, [page, retryTick, collectionId]);
+  }, [page, collectionId]);
 
   useEffect(() => {
     if (!questionId) return;
@@ -70,37 +79,61 @@ const OneQuestionDetails: FC = () => {
 
   useEffect(() => {
     if (!target) return;
-    if (questionsStatus !== 'success' || isListStale) return;
-    if (!questions.length) return;
+    if (isListStale) return;
+
+    if (questionsStatus === 'error') {
+      const next = new URLSearchParams(searchParams);
+      next.delete('target');
+      setSearchParams(next, { replace: true });
+      return;
+    }
+
+    if (questionsStatus !== 'success') return;
+
+    if (!questions.length) {
+      const next = new URLSearchParams(searchParams);
+      next.delete('target');
+      const fallbackPage = Math.max(1, page - 1);
+      next.set('page', String(fallbackPage));
+      navigate(
+        { pathname: `/collections/${collectionId}`, search: next.toString() },
+        { replace: true },
+      );
+      return;
+    }
 
     const id = target === 'first' ? questions[0].id : questions[questions.length - 1].id;
-
     const next = new URLSearchParams(searchParams);
     next.delete('target');
-
     navigate(
       { pathname: `/collections/${collectionId}/questions/${id}`, search: next.toString() },
       { replace: true },
     );
-  }, [target, questionsStatus, questions, isListStale, collectionId, navigate, searchParams]);
+  }, [
+    target,
+    questionsStatus,
+    questions,
+    isListStale,
+    page,
+    collectionId,
+    navigate,
+    searchParams,
+    setSearchParams,
+  ]);
 
   let content: ReactNode;
 
-  if (
+  if (questionsStatus === 'error') {
+    content = <NotFound />;
+  } else if (
     questionsStatus === 'idle' ||
     questionsStatus === 'loading' ||
     isListStale ||
     questionStatus === 'loading'
   ) {
     content = <OneQuestionSkeleton />;
-  } else if (questionsStatus === 'error') {
-    content = <NotFound />;
-  } else if (!questionData || questionData.id !== Number(questionId) || !isQuestionInList) {
-    if (target) {
-      content = <OneQuestionSkeleton />;
-    } else {
-      content = <NotFound />;
-    }
+  } else if (!questionData || questionData.id !== Number(questionId)) {
+    content = target ? <OneQuestionSkeleton /> : <NotFound />;
   } else {
     content = (
       <>

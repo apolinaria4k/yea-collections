@@ -5,11 +5,18 @@ import type { FC } from 'react';
 
 const NextPreviousButtons: FC = () => {
   const location = useLocation();
-  const { questions, totalPages } = useCollections();
+  const { questionsPage } = useCollections();
   const { questionId, collectionId } = useParams<{ questionId: string; collectionId: string }>();
   const [searchParams, setSearchParams] = useSearchParams();
   const page = Number(searchParams.get('page')) || 1;
   const navigate = useNavigate();
+
+  const isCurrent =
+    questionsPage !== null &&
+    questionsPage.collectionId === Number(collectionId) &&
+    questionsPage.page === page;
+  const questions = isCurrent ? questionsPage!.data : [];
+  const totalPages = isCurrent ? questionsPage!.totalPages : 0;
 
   const currentIndex = questions.findIndex((q) => q.id === Number(questionId));
 

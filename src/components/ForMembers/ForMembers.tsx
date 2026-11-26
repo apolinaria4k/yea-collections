@@ -1,7 +1,9 @@
 import styles from './index.module.css';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import type { FC } from 'react';
+
 const ForMembers: FC = () => {
+  const location = useLocation();
   return (
     <>
       <section className={styles.section}>

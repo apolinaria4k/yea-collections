@@ -1,5 +1,6 @@
 import styles from '../AllCollectionsAside/index.module.css';
 import MyTitle from '../UI/MyTitle/MyTitle';
+import type { FC } from 'react';
 
 interface Props {
   title: string;

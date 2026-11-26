@@ -1,36 +1,32 @@
-import { useSearchParams } from 'react-router-dom';
-import styles from './index.module.css';
-import useCollections from '../../../hooks/useCollections';
 import type { FC } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { usePagination } from '../../../hooks/usePagination';
+import styles from './index.module.css';
 
-const Pagination: FC = () => {
+interface Props {
+  totalPages: number;
+  page: number;
+}
+
+const Pagination: FC<Props> = ({ totalPages, page }) => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const { totalPages } = useCollections();
-  const page = Number(searchParams.get('page')) || 1;
   const pagesArray = usePagination(page, totalPages);
 
-  const handleClickPage = (page: number) => {
+  const handleClickPage = (nextPage: number) => {
     const next = new URLSearchParams(searchParams);
-    next.set('page', String(page));
+    next.set('page', String(nextPage));
     setSearchParams(next);
   };
 
   const handleNextPage = () => {
-    if (page < totalPages) {
-      const next = new URLSearchParams(searchParams);
-      next.set('page', String(page + 1));
-      setSearchParams(next);
-    }
+    if (page < totalPages) handleClickPage(page + 1);
   };
 
   const handlePreviousPage = () => {
-    if (page > 1) {
-      const next = new URLSearchParams(searchParams);
-      next.set('page', String(page - 1));
-      setSearchParams(next);
-    }
+    if (page > 1) handleClickPage(page - 1);
   };
+
+  if (totalPages <= 1) return null;
 
   return (
     <>

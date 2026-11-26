@@ -9,7 +9,7 @@ import type { FC, Dispatch, SetStateAction } from 'react';
 interface Props {
   totalSpecs: number;
   specializations: ISpecialization[];
-  setSpecializations: Dispatch<React.SetStateAction<ISpecialization[]>>;
+  setSpecializations: Dispatch<SetStateAction<ISpecialization[]>>;
   isVisible: boolean;
   setIsVisible: Dispatch<SetStateAction<boolean>>;
 }

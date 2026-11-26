@@ -1,3 +1,4 @@
+import { useSearchParams } from 'react-router-dom';
 import useCollections from '../../hooks/useCollections';
 import type { ListError, Status } from '../../interfaces';
 import AllCollectionsSkeleton from '../AllCollectionsSkeleton/AllCollectionsSkeleton';
@@ -13,7 +14,9 @@ interface Props {
 }
 
 const AllCollectionsSection: FC<Props> = ({ status, error, setIsVisible }) => {
-  const { collections } = useCollections();
+  const { collections, totalPages } = useCollections();
+  const [searchParams] = useSearchParams();
+  const page = Number(searchParams.get('page')) || 1;
 
   return (
     <>
@@ -52,7 +55,7 @@ const AllCollectionsSection: FC<Props> = ({ status, error, setIsVisible }) => {
                 <CollectionItem key={c.id} collection={c} />
               ))}
             </div>
-            <Pagination />
+            <Pagination totalPages={totalPages} page={page} />
           </>
         )}
       </section>

@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { CollectionsContext } from '../context';
 import type { FC, ReactNode } from 'react';
-import type { ICollection, IQuestion, ListError, Status } from '../interfaces';
+import type { ICollection, IQuestionsPage, ListError, Status } from '../interfaces';
 
 interface Props {
   children: ReactNode;
@@ -9,33 +9,32 @@ interface Props {
 
 const ContextProvider: FC<Props> = ({ children }) => {
   const [collections, setCollections] = useState<ICollection[]>([]);
-  const [questions, setQuestions] = useState<IQuestion[]>([]);
   const [totalPages, setTotalPages] = useState<number>(0);
-  const [loadedPage, setLoadedPage] = useState<number>(0);
-  const [listStatus, setListStatus] = useState<Status>('idle');
-  const [listError, setListError] = useState<ListError>(null);
+
+  const [questionsPage, setQuestionsPage] = useState<IQuestionsPage | null>(null);
+  const [questionsStatus, setQuestionsStatus] = useState<Status>('idle');
+  const [questionsError, setQuestionsError] = useState<ListError>(null);
+
   const [retryTick, setRetryTick] = useState<number>(0);
-  return (
-    <CollectionsContext.Provider
-      value={{
-        collections,
-        setCollections,
-        questions,
-        setQuestions,
-        totalPages,
-        setTotalPages,
-        loadedPage,
-        setLoadedPage,
-        listStatus,
-        setListStatus,
-        listError,
-        setListError,
-        retryTick,
-        setRetryTick,
-      }}>
-      {children}
-    </CollectionsContext.Provider>
+
+  const value = useMemo(
+    () => ({
+      collections,
+      setCollections,
+      totalPages,
+      setTotalPages,
+      questionsPage,
+      setQuestionsPage,
+      questionsStatus,
+      setQuestionsStatus,
+      questionsError,
+      setQuestionsError,
+      retryTick,
+      setRetryTick,
+    }),
+    [collections, totalPages, questionsPage, questionsStatus, questionsError, retryTick],
   );
+  return <CollectionsContext.Provider value={value}>{children}</CollectionsContext.Provider>;
 };
 
 export default ContextProvider;

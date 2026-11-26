@@ -1,9 +1,13 @@
-import useCollections from '../../hooks/useCollections';
+import type { FC } from 'react';
+import type { IQuestion } from '../../interfaces';
 import QuestionItem from '../QuestionItem/QuestionItem';
 import styles from './index.module.css';
-import type { FC } from 'react';
-const OneCollectionQuestionsBlock: FC = () => {
-  const { questions } = useCollections();
+
+interface Props {
+  questions: IQuestion[];
+}
+
+const OneCollectionQuestionsBlock: FC<Props> = ({ questions }) => {
   return (
     <>
       <ul className={styles.questionList}>

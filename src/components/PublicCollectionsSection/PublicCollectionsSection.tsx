@@ -6,16 +6,55 @@ import Pagination from '../UI/Pagination/Pagination';
 import type { FC, Dispatch, SetStateAction } from 'react';
 import styles from './index.module.css';
 import OneCollectionSkeleton from '../OneCollectionSkeleton/OneCollectionSkeleton';
+import ForMembers from '../ForMembers/ForMembers';
+import ForAllWithoutQuestions from '../ForAllWithoutQuestions/ForAllWithoutQuestions';
 
 interface Props {
   collection: ICollection | undefined;
   status: Status;
   error: ListError;
   setIsVisible: Dispatch<SetStateAction<boolean>>;
+  collectionId: number;
+  page: number;
 }
 
-const PublicCollectionsSection: FC<Props> = ({ collection, setIsVisible, status, error }) => {
-  const { questions } = useCollections();
+const PublicCollectionsSection: FC<Props> = ({
+  collection,
+  setIsVisible,
+  status,
+  error,
+  collectionId,
+  page,
+}) => {
+  const { questionsPage } = useCollections();
+  const isCurrent =
+    questionsPage !== null &&
+    questionsPage.collectionId === collectionId &&
+    questionsPage.page === page;
+
+  const questions = isCurrent ? questionsPage!.data : [];
+
+  let content;
+
+  if (status === 'error') {
+    content = <h2 className={styles.title}>{error}</h2>;
+  } else if (status === 'idle' || status === 'loading' || !isCurrent) {
+    content = <OneCollectionSkeleton />;
+  } else if (!collection) {
+    content = <OneCollectionSkeleton />;
+  } else if (!collection.isFree) {
+    content = <ForMembers />;
+  } else if (!questions.length) {
+    content = <ForAllWithoutQuestions />;
+  } else {
+    content = (
+      <>
+        <OneCollectionQuestionsBlock questions={questions} />
+        <Pagination totalPages={questionsPage!.totalPages} page={page} />
+      </>
+    );
+  }
+
   return (
     <>
       <section className={styles.section}>
@@ -27,18 +66,7 @@ const PublicCollectionsSection: FC<Props> = ({ collection, setIsVisible, status,
             <h2 className={styles.title}>Вопросы</h2>
           </div>
 
-          {status === 'idle' || status === 'loading' ? (
-            <OneCollectionSkeleton />
-          ) : status === 'error' ? (
-            <h2 className={styles.title}>{error}</h2>
-          ) : !questions.length ? (
-            <h2 className={styles.title}>Вопросы для данной коллекции скоро появятся</h2>
-          ) : (
-            <>
-              <OneCollectionQuestionsBlock />
-              <Pagination />
-            </>
-          )}
+          {content}
         </div>
       </section>
     </>

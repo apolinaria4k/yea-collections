@@ -3,6 +3,7 @@ import { Link, useLocation, useParams } from 'react-router-dom';
 import Characteristic from '../UI/Сharacteristic/Characteristic';
 import styles from './index.module.css';
 import { sanitizeHtml } from '../../utils/sanitizeHtml';
+import type { FC } from 'react';
 
 interface Props {
   id: number;

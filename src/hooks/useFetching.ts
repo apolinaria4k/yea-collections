@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { getErrorMessage } from '../utils/getErrorMessage';
 import type { ListError, Status } from '../interfaces';
 
@@ -8,10 +8,21 @@ export const useFetching = <T extends unknown[]>(
 ) => {
   const controlledRef = useRef<AbortController | null>(null);
   const requestIdRef = useRef(0);
+  const callbackRef = useRef(callback);
   const [status, setStatus] = useState<Status>('idle');
   const [error, setError] = useState<ListError>(null);
 
-  const fetching = async (...args: T) => {
+  useEffect(() => {
+    callbackRef.current = callback;
+  }, [callback]);
+
+  useEffect(() => {
+    return () => {
+      controlledRef.current?.abort();
+    };
+  }, []);
+
+  const fetching = useCallback(async (...args: T) => {
     const myId = ++requestIdRef.current;
     const isActual = () => requestIdRef.current === myId;
 
@@ -24,7 +35,7 @@ export const useFetching = <T extends unknown[]>(
       setStatus('loading');
       setError(null);
 
-      await callback(signal, ...args);
+      await callbackRef.current(signal, ...args);
 
       if (isActual() && !signal.aborted) {
         setStatus('success');
@@ -32,12 +43,12 @@ export const useFetching = <T extends unknown[]>(
     } catch (error) {
       if (axios.isCancel(error)) return;
 
-      if (!isActual()) return;
+      if (!isActual() || signal.aborted) return;
 
       setError(getErrorMessage(error));
       setStatus('error');
     }
-  };
+  }, []);
 
   return [fetching, status, error] as const;
 };

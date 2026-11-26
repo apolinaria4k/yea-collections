@@ -75,19 +75,30 @@ export type PendingTarget = {
   position: 'first' | 'last';
 };
 
+export interface IQuestionsPage {
+  collectionId: number;
+  page: number;
+  data: IQuestion[];
+  totalPages: number;
+}
+
+export type QuestionsStatus = Status;
+export type QuestionsError = ListError;
+
 export interface ICollectionsContextValue {
   collections: ICollection[];
   setCollections: Dispatch<SetStateAction<ICollection[]>>;
   totalPages: number;
   setTotalPages: Dispatch<SetStateAction<number>>;
-  questions: IQuestion[];
-  setQuestions: Dispatch<SetStateAction<IQuestion[]>>;
-  loadedPage: number;
-  setLoadedPage: Dispatch<SetStateAction<number>>;
-  listStatus: Status;
-  setListStatus: Dispatch<SetStateAction<Status>>;
-  listError: ListError;
-  setListError: Dispatch<SetStateAction<ListError>>;
+
+  questionsPage: IQuestionsPage | null;
+  setQuestionsPage: Dispatch<SetStateAction<IQuestionsPage | null>>;
+
+  questionsStatus: Status;
+  setQuestionsStatus: Dispatch<SetStateAction<Status>>;
+  questionsError: ListError;
+  setQuestionsError: Dispatch<SetStateAction<ListError>>;
+
   retryTick: number;
   setRetryTick: Dispatch<SetStateAction<number>>;
 }

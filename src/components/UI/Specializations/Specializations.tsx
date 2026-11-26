@@ -1,6 +1,7 @@
 import type { ISpecialization } from '../../../interfaces';
 import Specialization from '../Specialization/Specialization';
 import styles from './index.module.css';
+import type { FC } from 'react';
 
 interface Props {
   specializations: ISpecialization[];
