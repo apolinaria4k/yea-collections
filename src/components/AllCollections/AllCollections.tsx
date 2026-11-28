@@ -42,7 +42,7 @@ export const AllCollections: FC = () => {
       );
       setCollections(response.data.data);
       const totalCount = response.data.total;
-      setTotalPages(getTotalPages(totalCount));
+      setTotalPages(getTotalPages(totalCount, response.data.limit));
     },
   );
 
@@ -53,8 +53,9 @@ export const AllCollections: FC = () => {
   });
 
   useEffect(() => {
+    if (debouncedValue !== value) return;
     fetchCollections(page, debouncedValue, specializations, isFree);
-  }, [page, debouncedValue, specializations, isFree]);
+  }, [page, debouncedValue, value, specializations, isFree]);
 
   useEffect(() => {
     fetchSpecializations();
