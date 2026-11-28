@@ -15,8 +15,14 @@ import OneQuestionSkeleton from '../OneQuestionSkeleton/OneQuestionSkeleton';
 const OneQuestionDetails: FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { setQuestionsPage, setQuestionsStatus, setQuestionsError, questionsPage } =
-    useCollections();
+  const {
+    setQuestionsPage,
+    setQuestionsStatus,
+    setQuestionsError,
+    questionsPage,
+    retryTick,
+    setRetryTick,
+  } = useCollections();
   const { questionId, collectionId } = useParams<{ questionId: string; collectionId: string }>();
   const [questionData, setQuestionData] = useState<IQuestion>();
   const [isVisible, setIsVisible] = useState(false);
@@ -34,7 +40,7 @@ const OneQuestionDetails: FC = () => {
     questionsPage.collectionId === Number(collectionId) &&
     questionsPage.page === page;
   const questions = isListCurrent ? questionsPage!.data : [];
-  const isListStale = !isListCurrent;
+  // const isListStale = !isListCurrent;
 
   const [fetchAllQuestions, questionsStatus, questionsError] = useFetching(
     async (signal: AbortSignal, page: number, collectionId: number) => {
@@ -54,7 +60,7 @@ const OneQuestionDetails: FC = () => {
     },
   );
 
-  const [fetchQuestionData, questionStatus] = useFetching(
+  const [fetchQuestionData, questionStatus, questionError] = useFetching(
     async (signal: AbortSignal, id: number) => {
       const response = await CollectionService.getQuestionById(id, signal);
       if (signal.aborted) return;
@@ -70,16 +76,15 @@ const OneQuestionDetails: FC = () => {
   useEffect(() => {
     if (!collectionId) return;
     fetchAllQuestions(page, Number(collectionId));
-  }, [page, collectionId]);
+  }, [page, collectionId, retryTick]);
 
   useEffect(() => {
     if (!questionId) return;
     fetchQuestionData(Number(questionId));
-  }, [questionId]);
+  }, [questionId, retryTick]);
 
   useEffect(() => {
     if (!target) return;
-    if (isListStale) return;
 
     if (questionsStatus === 'error') {
       const next = new URLSearchParams(searchParams);
@@ -88,17 +93,22 @@ const OneQuestionDetails: FC = () => {
       return;
     }
 
-    if (questionsStatus !== 'success') return;
+    if (questionsStatus !== 'success' || !isListCurrent) return;
 
     if (!questions.length) {
       const next = new URLSearchParams(searchParams);
       next.delete('target');
-      const fallbackPage = Math.max(1, page - 1);
-      next.set('page', String(fallbackPage));
-      navigate(
-        { pathname: `/collections/${collectionId}`, search: next.toString() },
-        { replace: true },
-      );
+
+      if (page > 1) {
+        next.set('page', String(page - 1));
+        navigate(
+          { pathname: `/collections/${collectionId}`, search: next.toString() },
+          { replace: true },
+        );
+      } else {
+        navigate({ pathname: `/`, search: '' }, { replace: true });
+      }
+
       return;
     }
 
@@ -113,7 +123,7 @@ const OneQuestionDetails: FC = () => {
     target,
     questionsStatus,
     questions,
-    isListStale,
+    isListCurrent,
     page,
     collectionId,
     navigate,
@@ -121,14 +131,34 @@ const OneQuestionDetails: FC = () => {
     setSearchParams,
   ]);
 
+  const handleRetry = () => {
+    setRetryTick((t) => t + 1);
+  };
+
   let content: ReactNode;
 
   if (questionsStatus === 'error') {
-    content = <NotFound />;
+    content = (
+      <div className={styles.errorState}>
+        <p>Не удалось загрузить вопросы: {questionsError}</p>
+        <button onClick={handleRetry} className={styles.retryButton}>
+          Повторить
+        </button>
+      </div>
+    );
+  } else if (questionStatus === 'error') {
+    content = (
+      <div className={styles.errorState}>
+        <p>Не удалось загрузить вопрос: {questionError}</p>
+        <button onClick={handleRetry} className={styles.retryButton}>
+          Повторить
+        </button>
+      </div>
+    );
   } else if (
     questionsStatus === 'idle' ||
     questionsStatus === 'loading' ||
-    isListStale ||
+    !isListCurrent ||
     questionStatus === 'loading'
   ) {
     content = <OneQuestionSkeleton />;
